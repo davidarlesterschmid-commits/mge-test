@@ -1,0 +1,1083 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><title>MGE Seminar Test</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: one calm column (max ~760px); the only framed objects are the question card, the code box and data tables. */
+:root {
+  --bg: #F2F5F6; --surface: #FFFFFF; --ink: #13222A; --muted: #55676F; --line: #D3DDE1;
+  --accent: #0A6A74; --accent-ink: #FFFFFF; --accent-soft: #DCEEEF;
+  --warn: #8F5400; --warn-soft: #FBEBD3; --bad: #AD2A20; --bad-soft: #FAE1DE; --good: #1F7345; --good-soft: #DCF0E3;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1518; --surface: #162026; --ink: #E4EDF0; --muted: #94A6AE; --line: #2A3B42;
+    --accent: #52B7C0; --accent-ink: #062226; --accent-soft: #15353A;
+    --warn: #E5A447; --warn-soft: #3A2B12; --bad: #F08C82; --bad-soft: #3F1D1A; --good: #6CC795; --good-soft: #163424;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1518; --surface: #162026; --ink: #E4EDF0; --muted: #94A6AE; --line: #2A3B42;
+  --accent: #52B7C0; --accent-ink: #062226; --accent-soft: #15353A;
+  --warn: #E5A447; --warn-soft: #3A2B12; --bad: #F08C82; --bad-soft: #3F1D1A; --good: #6CC795; --good-soft: #163424;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0; }
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.lead { font-size: 1.12rem; color: var(--muted); max-width: 62ch; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--f-mono); }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.btn { font: 600 1rem var(--f-body); border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); border-radius: 8px; padding: 10px 20px; cursor: pointer; min-height: 44px; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); border-color: transparent; }
+.btn.outline { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: 0.45; cursor: default; filter: none; }
+.btn:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+label { font-weight: 600; }
+input[type="text"], input[type="number"], textarea { font: inherit; color: var(--ink); background: var(--surface); border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; }
+input:focus, textarea:focus { border-color: var(--accent); }
+.note { border-radius: 8px; padding: 10px 14px; font-size: 0.95rem; }
+.note.warn { background: var(--warn-soft); color: var(--warn); }
+.note.bad { background: var(--bad-soft); color: var(--bad); }
+.note.ok { background: var(--good-soft); color: var(--good); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+.facts { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--line); }
+.facts li { padding: 12px 0; display: flex; flex-direction: column; }
+.facts li + li { padding-left: 16px; border-left: 1px solid var(--line); }
+.facts b { font-family: var(--f-display); font-size: 2rem; font-weight: 800; line-height: 1; }
+.facts span { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.rules ul { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; max-width: 66ch; }
+form { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field small { color: var(--muted); font-weight: 400; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+#f-code { font-family: var(--f-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.check input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); flex: none; }
+
+/* test view */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.who { display: flex; flex-direction: column; min-width: 0; }
+.who span:first-child { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.who span:last-child { font-size: 0.85rem; color: var(--muted); }
+.timer { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 500; font-variant-numeric: tabular-nums; padding: 4px 12px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); }
+.timer.warn { background: var(--warn-soft); color: var(--warn); }
+.timer.crit { background: var(--bad-soft); color: var(--bad); }
+.qcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: flex; flex-direction: column; gap: 16px; user-select: none; -webkit-user-select: none; }
+.qhead { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.qhead span:first-child { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); }
+.chip { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.qtext { font-size: 1.2rem; font-weight: 600; line-height: 1.4; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { display: flex; gap: 12px; align-items: flex-start; text-align: left; font: inherit; color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 12px 14px; cursor: pointer; width: 100%; }
+.opt:hover { border-color: var(--accent); }
+.opt .lt { font-family: var(--f-mono); font-weight: 500; flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--line); font-size: 0.85rem; }
+.opt[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.opt[aria-checked="true"] .lt { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.navrow { display: flex; justify-content: space-between; gap: 12px; }
+.qnav { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 6px; }
+.qnav button { font: 500 0.9rem var(--f-mono); min-height: 40px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
+.qnav button.done { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.qnav button.cur { border-color: var(--ink); color: var(--ink); }
+.legend { font-size: 0.85rem; color: var(--muted); }
+.finish { display: flex; justify-content: flex-end; }
+.confirm { background: var(--surface); border: 1.5px solid var(--ink); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+
+/* done view */
+.codebox { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+#d-code { font-family: var(--f-mono); font-size: 0.85rem; word-break: break-all; resize: none; user-select: all; }
+.scorebox { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--line); padding: 14px 0; }
+.scorebox .pct { font-family: var(--f-display); font-weight: 800; font-size: clamp(3rem, 12vw, 4.5rem); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.check-no { font-family: var(--f-mono); font-size: 1.3rem; letter-spacing: 0.1em; color: var(--ink); }
+
+/* built-in calculator */
+.bar-right { display: flex; align-items: center; gap: 10px; flex: none; }
+.calc-btn { font: 600 0.95rem var(--f-body); min-height: 44px; padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; }
+.calc-btn[aria-expanded="true"] { background: var(--accent); color: var(--accent-ink); }
+.calc { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); width: 300px; z-index: 30; background: var(--surface); border: 1.5px solid var(--ink); border-radius: var(--r); padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22); user-select: none; -webkit-user-select: none; }
+.calc-head { display: flex; justify-content: space-between; align-items: center; }
+.calc-head span { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.calc-x { border: 0; background: transparent; color: var(--muted); font-size: 1.5rem; line-height: 1; width: 36px; height: 36px; cursor: pointer; border-radius: 6px; }
+.calc-x:hover { color: var(--ink); }
+.calc-disp { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; text-align: right; font-family: var(--f-mono); min-height: 68px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; }
+.calc-expr { font-size: 0.85rem; color: var(--muted); min-height: 1.3em; overflow-wrap: anywhere; }
+.calc-val { font-size: 1.5rem; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; line-height: 1.2; }
+.calc-val.err { color: var(--bad); font-size: 1rem; }
+.calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.calc-keys button { font: 500 1.1rem var(--f-mono); min-height: 44px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.calc-keys button:hover { border-color: var(--accent); }
+.calc-keys button.op { color: var(--accent); }
+.calc-keys button.eq { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.calc-hist { list-style: none; margin: 0; padding: 0; font: 0.8rem var(--f-mono); color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+.calc-hist li { text-align: right; cursor: pointer; overflow-wrap: anywhere; }
+.calc-hist li:hover { color: var(--ink); }
+.calc-hint { font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 560px) {
+  .calc { left: max(16px, env(safe-area-inset-left, 0px)); width: auto; }
+  body.calc-open .wrap { padding-bottom: 460px; }
+  .calc-btn { padding: 6px 10px; }
+  .calc-hint { display: none; }
+}
+</style>
+
+<div class="wrap">
+  <section id="v-start" class="stack" style="gap:28px">
+    <div class="stack" style="gap:12px">
+      <p class="eyebrow">WashTech Ltd · Mastering Global Expansion 8.2</p>
+      <h1>Seminar Test</h1>
+      <p class="lead">Multiple-choice questions on the KPIs of the Executive Summary report and on strategic decisions in international expansion.</p>
+    </div>
+    <p id="closed" class="note warn" role="alert" hidden></p>
+    <ul class="facts" aria-label="Test facts">
+      <li><b>20</b><span>minutes</span></li>
+      <li><b>15</b><span>questions</span></li>
+      <li><b>1</b><span>attempt</span></li>
+    </ul>
+    <div class="rules">
+      <h2>Before you start</h2>
+      <ul>
+        <li>Everyone gets an individual selection of questions in an individual order. Calculation questions use individual numbers. Copying from a neighbour does not help.</li>
+        <li>Each question has exactly one correct answer. Questions without an answer count as wrong.</li>
+        <li>The timer starts when you click <b>Start test</b>. It keeps running if you reload or close the page. After 20 minutes your answers are submitted automatically.</li>
+        <li>Stay in this window. Every switch to another tab or program is recorded.</li>
+        <li>Use the built-in calculator (button <b>Calculator</b> next to the timer). You do not need any other program.</li>
+        <li id="rule-result">When you submit, you see how many percent of the questions you answered correctly, and you get a result code. Hand it in the way your instructor tells you.</li>
+      </ul>
+    </div>
+    <form id="start-form" novalidate>
+      <div class="field"><label for="f-name">First and last name <small>(as on the participant list)</small></label><input id="f-name" type="text" autocomplete="name" maxlength="60"></div>
+      <p id="f-date" class="muted" hidden></p>
+      <div class="field" id="code-field"><label for="f-code">Access code <small>(your instructor shows it at the start)</small></label><input id="f-code" type="text" autocomplete="off" maxlength="9" placeholder="XXXX-XX" spellcheck="false"></div>
+      <label class="check" for="f-honor"><input id="f-honor" type="checkbox"><span>I will work on my own and will not use other people's help.</span></label>
+      <p id="f-err" class="note bad" role="alert" hidden></p>
+      <div class="row"><button class="btn" type="submit" id="f-start">Start test</button></div>
+    </form>
+  </section>
+
+  <section id="v-test" class="stack" hidden>
+    <header class="bar">
+      <div class="who"><span id="t-name"></span><span id="t-progress"></span></div>
+      <div class="bar-right">
+        <button id="calc-toggle" class="calc-btn" type="button" aria-expanded="false" aria-controls="calc">Calculator</button>
+        <div class="timer" id="timer" role="timer" aria-label="Time left">20:00</div>
+      </div>
+    </header>
+    <p id="away-warn" class="note warn" role="status" hidden></p>
+    <article class="qcard" aria-live="polite">
+      <div class="qhead"><span id="q-num"></span><span class="chip" id="q-cat"></span></div>
+      <p id="q-text" class="qtext"></p>
+      <div id="q-opts" class="opts" role="radiogroup" aria-labelledby="q-text"></div>
+    </article>
+    <div class="navrow">
+      <button id="prev" class="btn outline" type="button">Previous</button>
+      <button id="next" class="btn" type="button">Next</button>
+    </div>
+    <nav id="qnav" class="qnav" aria-label="All questions"></nav>
+    <p class="legend">Filled numbers are answered. You can go back to any question until you submit.</p>
+    <div class="finish"><button id="finish" class="btn outline" type="button">Finish test</button></div>
+    <div id="confirm" class="confirm" hidden>
+      <p id="confirm-text"></p>
+      <div class="row"><button id="c-submit" class="btn" type="button">Submit test</button><button id="c-back" class="btn ghost" type="button">Back to the test</button></div>
+    </div>
+  </section>
+
+  <section id="v-done" class="stack" style="gap:20px" hidden>
+    <div class="stack" style="gap:10px">
+      <p class="eyebrow">Test submitted</p>
+      <h1>Thank you, <span id="d-name"></span></h1>
+      <p id="d-info" class="lead"></p>
+    </div>
+    <div class="scorebox" role="status">
+      <span class="pct" id="d-pct"></span>
+      <span><b>Your result</b><br><span id="d-score"></span></span>
+    </div>
+    <p id="d-saved" class="note" role="status" hidden></p>
+    <div class="row" id="d-retry-row" hidden><button id="d-retry" class="btn" type="button">Try saving again</button></div>
+    <div id="d-codepart" class="stack" style="gap:20px">
+    <div class="codebox">
+      <label for="d-code">Your result code</label>
+      <textarea id="d-code" readonly rows="5"></textarea>
+      <div class="row"><button id="d-copy" class="btn" type="button">Copy code</button><span id="d-copied" class="muted" aria-live="polite"></span></div>
+      <p class="muted">Check number <span id="d-check" class="check-no"></span></p>
+    </div>
+    <p id="d-codehelp" style="max-width:66ch">Hand in this code exactly as it is, the way your instructor tells you (for example in the seminar chat or by e-mail). Your instructor needs it to record your result. If the code gets lost, open this page again in the same browser and enter the same name and access code: the code is shown again.</p>
+    </div>
+  </section>
+</div>
+
+<aside id="calc" class="calc" aria-label="Calculator" hidden>
+  <div class="calc-head"><span>Calculator</span><button id="calc-close" class="calc-x" type="button" tabindex="-1" aria-label="Close calculator">×</button></div>
+  <div class="calc-disp" aria-live="polite"><div id="calc-expr" class="calc-expr"></div><div id="calc-val" class="calc-val">0</div></div>
+  <div id="calc-keys" class="calc-keys"></div>
+  <ul id="calc-hist" class="calc-hist" aria-label="Last results"></ul>
+  <p class="calc-hint">Keyboard works too: digits, + − * /, ( ), Enter, Backspace. Esc closes.</p>
+</aside>
+
+<script>
+var FORM_CFG = {"url":"https://docs.google.com/forms/d/e/1FAIpQLSef7jBuk5zX-mc-cCh3rech_CYjfc-sl18WQPXHii6N6gSqrQ/formResponse","name":"entry.1497107227","type":"entry.140315379","data":"entry.426692637"};
+var BANK = {"version":"2026-10-19-probe","q":{"k01":{"id":"k01","cat":"kpi","t":"Revenue Global went up compared to the last period, but Net Income went down. Which explanation fits best?","o":["The equity ratio rose","The company sold fewer units","Costs rose faster than revenue","The share price fell"]},"k02":{"id":"k02","cat":"kpi","t":"How is 'Return on Sales' calculated?","o":["Net Income ÷ Equity × 100","Net Income ÷ Revenue × 100","Operating Result ÷ Equity × 100","Revenue ÷ units sold"]},"k03":{"id":"k03","cat":"kpi","t":"The Equity Ratio and the Debt Ratio of a company always add up to …","o":["the Share Price","50 %","the Return on Sales","100 %"]},"k04":{"id":"k04","cat":"kpi","t":"What does a Competitiveness Index of 100 in a region mean?","o":["The company has the lowest price in the market","The company reaches all potential customers in that market","The company has a market share of 100 %","The company sells exactly 100,000 units"]},"k05":{"id":"k05","cat":"kpi","t":"In the Executive Summary, your Competitiveness Index in one region is 0. What does this tell you?","o":["There are no competitors in that region","The company cannot reach any customers there (for example because it is not active in that region)","The company is the market leader there","The market in that region is empty"]},"k06":{"id":"k06","cat":"kpi","t":"What does 'Market Share Revenue in Region' show?","o":["The share of your production that was sold in that region","The share of your own revenue that comes from that region","The revenue growth compared to the last period","Your share of the total revenue of all washing machine sellers in that region"]},"k07":{"id":"k07","cat":"kpi","t":"'Share Company Revenue' is 100 % for Europe. What does this mean?","o":["The European market grew by 100 %","All of the company's revenue comes from Europe","The company owns the whole European market","The company sold its entire production"]},"k08":{"id":"k08","cat":"kpi","t":"Plant Utilization is only 77 %. What is the main consequence for costs?","o":["The cost per unit falls because less is produced","The variable costs per unit double","There is no effect on costs","The fixed costs of the plant are spread over fewer units, so the cost per unit rises"]},"k09":{"id":"k09","cat":"kpi","t":"Production Employee Utilization is 108 %. What does this mean for costs?","o":["Nothing, overtime is paid like normal working hours","Employees work overtime with a wage surcharge, so personnel costs per unit rise","The plant capacity grows permanently by 8 %","Costs per unit fall because the employees are fully used"]},"k10":{"id":"k10","cat":"kpi","t":"How can a company avoid an expensive Overdraft Loan?","o":["Plan the cash flow and arrange a cheaper short- or long-term loan in advance","Build an additional plant","Produce more units for stock","Increase the advertising budget"]},"k11":{"id":"k11","cat":"kpi","t":"The company's rating improves (for example from BBB to A). What happens to the interest rates?","o":["All long-term loans must be repaid","They go up in the next period","They go down in the next period","Nothing, the rating has no effect on interest"]},"k12":{"id":"k12","cat":"kpi","t":"Which of these figures is NOT used to calculate the Share Price?","o":["Planning Quality","Net Income","Equity","Cash Balance"]},"k13":{"id":"k13","cat":"kpi","t":"What does 'Planning Quality' measure?","o":["How close your actual results are to your planned sales and revenue","How good the quality of your washing machines is","How many decisions were handed in on time","How well your plant is maintained"]},"k14":{"id":"k14","cat":"kpi","t":"The CSR-Index is determined by …","o":["your market share","your advertising budget","the sustainability of your plants and the CSR-Index of your suppliers","the number of sales employees"]},"k15":{"id":"k15","cat":"kpi","t":"How do you get from the Operating Result to the Net Income?","o":["Add the Cash Balance","Subtract the Equity","Multiply by the Share Price","Add the Financial Result and subtract taxes"]},"k16":{"id":"k16","cat":"kpi","t":"The Financial Result in the Executive Summary is negative. Where does it mainly come from?","o":["Costs of building a plant","Interest paid on the company's loans","Losses from selling washing machines","Advertising expenses"]},"k17":{"id":"k17","cat":"kpi","t":"Which decisions lower the Production Cost per Unit in the long run?","o":["Raising the advertising budget","Building up a large stock of finished products","Investing in training and process optimization to raise productivity","Raising the sales price"]},"k18":{"id":"k18","cat":"kpi","t":"Net Income rose, but the Share Price fell. How is this possible?","o":["The Share Price depends only on the Cash Balance","The Share Price combines several weighted KPIs, and others (for example Debt Ratio or Planning Quality) got worse","It is impossible: a higher Net Income always raises the Share Price","The Share Price depends only on the market share"]},"k19":{"id":"k19","cat":"kpi","t":"Which line of the Executive Summary tells you how many washing machines you sold in a region?","o":["Sales (Units)","Plant Utilization","Competitiveness Index","Regional Result"]},"k20":{"id":"k20","cat":"kpi","t":"A region shows high sales in units but a negative Regional Result. What is the most likely explanation?","o":["The company's equity ratio is too high","The Competitiveness Index in that region is too high","The market in that region is growing","The price is too low or the costs of serving that region (for example transport, tariffs, marketing) are too high"]},"s01":{"id":"s01","cat":"sim","t":"Which of these is NOT a form of market entry in Mastering Global Expansion?","o":["Production partner","Sales partner","Own sales team","Licensing the brand to a local company"]},"s07":{"id":"s07","cat":"sim","t":"Which three factors make up the Competitiveness Index?","o":["Market knowledge, company image and market barriers","Revenue, net income and equity","Technology, ecology and price","Price, advertising and sales employees"]},"s08":{"id":"s08","cat":"sim","t":"What does spending on Corporate Identity increase?","o":["The interest rate","The technology level of your product","The production capacity","The awareness of your company in all regions"]},"s09":{"id":"s09","cat":"sim","t":"Why can a local plant help you sell more in a region?","o":["It removes all competitors from the region","Customers prefer local production, so market barriers go down","It doubles the effect of your advertising","It automatically lowers the market price"]},"s10":{"id":"s10","cat":"sim","t":"When is your price usually in the 'inelastic' range, where small changes hardly affect demand?","o":["Only when it equals the lowest competitor price","When it is 20–30 % below the market price","Always, demand never reacts to price","When it is within about 3–5 % of the average market price"]},"s19":{"id":"s19","cat":"sim","t":"What does the training budget per production employee mainly improve?","o":["The Qualification Index and with it productivity","The awareness level","The market share","The CSR-Index"]},"s21":{"id":"s21","cat":"sim","t":"When is a sales partner usually a better choice than your own sales team?","o":["For a quick or uncertain market entry: the partner brings market knowledge and you avoid fixed costs","When you plan to stay in the market for many years and want to build your own knowledge","When you want full control over sales","When you want to avoid paying commissions"]},"s22":{"id":"s22","cat":"sim","t":"What is the main advantage of a production partner compared to your own plant?","o":["You can end the contract at any time","A higher CSR-Index is guaranteed","No large investment, and production is possible right away","The cost per unit is lower in every case"]},"s23":{"id":"s23","cat":"sim","t":"Why does the productivity per employee rise with the cumulative production volume?","o":["Because the plant gets bigger automatically","Because wages fall over time","Learning curve: with experience the work gets done faster","Because demand rises"]},"s24":{"id":"s24","cat":"sim","t":"You double the advertising budget in a region. What usually happens to sales?","o":["They double","They fall","They rise, but by less than double (diminishing returns)","They rise by more than double"]},"s25":{"id":"s25","cat":"sim","t":"Why should a new plant be financed with a long-term rather than a short-term loan?","o":["Short-term loans are not allowed for investments","Long-term investments should be financed long-term, because the money comes back only over many years","Short-term loans lower the equity ratio, long-term loans do not","Long-term loans have no interest"]},"s26":{"id":"s26","cat":"sim","t":"Demand rises for one period only. What is usually the better way to produce more?","o":["Use overtime instead of hiring new employees","Build a new plant","Hire many new employees and dismiss them in the next period","Double the training budget"]},"s27":{"id":"s27","cat":"sim","t":"Why should you buy market research before entering a new market?","o":["It automatically increases your market share","It lowers the import tariffs","To learn about customer preferences and competitors and reduce the risk of a wrong decision","It is required by law"]},"s28":{"id":"s28","cat":"sim","t":"Customers in one region are very price-sensitive. Which product decision can make sense there?","o":["Raise the technology level to the maximum","Stop advertising in that region","Set the price clearly above the market average","Offer a lower technology level there to cut variable costs and allow a lower price"]},"s29":{"id":"s29","cat":"sim","t":"You stop advertising and Corporate Identity spending. What happens to your awareness in a region?","o":["It stays the same forever","It drops to zero immediately","It decreases over time","It keeps rising"]},"s30":{"id":"s30","cat":"sim","t":"Why are import tariffs and transport costs called economic market barriers?","o":["They make it more expensive to serve the market from abroad","They lower the price customers pay","They only affect local competitors","They raise your Competitiveness Index"]}}};
+var KEY = null;
+var KEYH = {"k01":655950,"k02":955363,"k03":69263,"k04":941309,"k05":859674,"k06":429570,"k07":211384,"k08":507802,"k09":94863,"k10":327390,"k11":738682,"k12":603982,"k13":56329,"k14":889336,"k15":55087,"k16":211995,"k17":855347,"k18":371571,"k19":686471,"k20":947398,"s01":260609,"s07":170969,"s08":908481,"s09":291925,"s10":749841,"s19":490899,"s21":846931,"s22":74974,"s23":708862,"s24":926207,"s25":796924,"s26":280061,"s27":696560,"s28":532583,"s29":819709,"s30":89823};
+var DATA = null;
+// Shared test engine (student page + instructor tool).
+// Expects the globals BANK (question pool without key) and KEY (answer key,
+// null in the student build). No backslashes in this file on purpose.
+var MGE = (function () {
+  "use strict";
+
+  var MINUTES = 20;
+  // DATA (optional global): real Executive Summary figures of the seminar, see import_reports.py.
+  var HAS_DATA = typeof DATA !== "undefined" && DATA !== null && !!DATA.periods;
+  var PLAN = HAS_DATA
+    ? [{ cat: "kpi", n: 5 }, { cat: "data", n: 6 }, { cat: "sim", n: 4 }]
+    : [{ cat: "kpi", n: 6 }, { cat: "calc", n: 4 }, { cat: "sim", n: 5 }];
+  var CAT_LABEL = { kpi: "Executive Summary KPI", calc: "KPI calculation", data: "Our seminar results", sim: "Strategy & transfer" };
+  var ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var ACCESS_SALT = "wt-acc-7Q";
+  var RESULT_SALT = "wt-res-K3";
+  var REGIONS = ["Europe", "North America", "South America", "Central Asia", "Asia Pacific"];
+
+  // ---------- hashing + seeded random ----------
+  function hash(str) { // cyrb53
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (var i = 0; i < str.length; i++) {
+      var ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  function rng(str) { // mulberry32 seeded from a string
+    var a = hash(str) % 4294967296 >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function shuffle(arr, r) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(r() * (i + 1));
+      var x = a[i]; a[i] = a[j]; a[j] = x;
+    }
+    return a;
+  }
+  function ri(r, lo, hi) { return lo + Math.floor(r() * (hi - lo + 1)); }
+  function round(v, d) { var f = Math.pow(10, d); return Math.round(v * f) / f; }
+  // Same output in every browser and on the Apps Script server (no locale APIs).
+  function fmt(v, d) {
+    var s = Math.abs(v).toFixed(d), parts = s.split("."), int = parts[0], out = "";
+    while (int.length > 3) { out = "," + int.slice(-3) + out; int = int.slice(0, -3); }
+    return (v < 0 && Number(s) !== 0 ? "-" : "") + int + out + (parts[1] ? "." + parts[1] : "");
+  }
+
+  // ---------- normalising inputs ----------
+  function onlyChars(s, allowed) {
+    var out = "";
+    s = String(s || "").toUpperCase();
+    for (var i = 0; i < s.length; i++) if (allowed.indexOf(s[i]) >= 0) out += s[i];
+    return out;
+  }
+  function normCode(s) { return onlyChars(s, ALPH); }
+  function normId(s) { return onlyChars(s, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"); }
+  // Display form: single spaces. Key form: letters only, accents removed ("Jörg Müller" -> "JORGMULLER").
+  function cleanName(s) { return String(s || "").trim().split(" ").filter(Boolean).join(" "); }
+  function nameKey(s) { return normId(String(s || "").normalize("NFD")); }
+  function checkChars(body) {
+    var h = hash(ACCESS_SALT + body);
+    return ALPH[h % 32] + ALPH[Math.floor(h / 32) % 32];
+  }
+  function validCode(norm) { return norm.length === 6 && checkChars(norm.slice(0, 4)) === norm.slice(4); }
+  function prettyCode(norm) { return norm.slice(0, 4) + "-" + norm.slice(4); }
+  function newCode() {
+    var body = "", buf = new Uint32Array(4);
+    (window.crypto || window.msCrypto).getRandomValues(buf);
+    for (var i = 0; i < 4; i++) body += ALPH[buf[i] % 32];
+    return body + checkChars(body);
+  }
+
+  // ---------- calculated questions (option 0 is correct) ----------
+  function distractors(correct, cands, d) {
+    var out = [], seen = [round(correct, d)];
+    function add(v) {
+      v = round(v, d);
+      if (out.length >= 3 || !isFinite(v) || v <= 0) return;
+      for (var i = 0; i < seen.length; i++) {
+        if (Math.abs(seen[i] - v) < Math.max(Math.abs(seen[i]) * 0.04, Math.pow(10, -d) * 2)) return;
+      }
+      out.push(v); seen.push(v);
+    }
+    cands.forEach(add);
+    [0.8, 1.25, 0.65, 1.4, 0.9, 1.15, 0.5, 1.6].forEach(function (m) { add(correct * m); });
+    return out;
+  }
+  function opts(correct, cands, d, unit) {
+    var all = [round(correct, d)].concat(distractors(correct, cands, d));
+    return all.map(function (v) { return fmt(v, d) + unit; });
+  }
+
+  var CALC = {
+    c01: function (r) {
+      var rev = ri(r, 1500, 3000) / 10, ros = ri(r, 30, 120) / 10;
+      var ni = round(rev * ros / 100, 1), c = ni / rev * 100;
+      return { t: "Revenue Global is " + fmt(rev, 1) + " MEUR and Net Income is " + fmt(ni, 1) + " MEUR. What is the Return on Sales?",
+        o: opts(c, [rev / ni, c * 2, (rev - ni) / rev * 100], 1, " %") };
+    },
+    c02: function (r) {
+      var er = ri(r, 450, 750) / 10, c = 100 - er;
+      return { t: "The Executive Summary shows an Equity Ratio of " + fmt(er, 1) + " %. What is the Debt Ratio?",
+        o: opts(c, [er, c + 10, c / 2], 1, " %") };
+    },
+    c03: function (r) {
+      var e = ri(r, 600, 1200) / 10, d = ri(r, 300, 900) / 10, tot = round(e + d, 1), c = e / tot * 100;
+      return { t: "Equity is " + fmt(e, 1) + " MEUR and the balance sheet total (total capital) is " + fmt(tot, 1) + " MEUR. What is the Equity Ratio?",
+        o: opts(c, [d / tot * 100, e / d * 100], 1, " %") };
+    },
+    c04: function (r) {
+      var reg = REGIONS[ri(r, 0, 4)], vol = ri(r, 900, 1400), rev = ri(r, 1200, 3000) / 10, c = rev / vol * 100;
+      return { t: "The washing machine market in " + reg + " has a volume of " + fmt(vol, 0) + " MEUR. Your revenue there is " + fmt(rev, 1) + " MEUR. What is your 'Market Share Revenue in Region'?",
+        o: opts(c, [vol / rev, c * 2, 100 - c], 1, " %") };
+    },
+    c05: function (r) {
+      var cap = ri(r, 8, 12) * 50000, prod = Math.round(cap * ri(r, 60, 98) / 100 / 1000) * 1000, c = prod / cap * 100;
+      return { t: "A plant has a capacity of " + fmt(cap, 0) + " units. This period it produced " + fmt(prod, 0) + " units. What is the Plant Utilization?",
+        o: opts(c, [(cap - prod) / cap * 100, cap / prod * 100], 1, " %") };
+    },
+    c06: function (r) {
+      var or = ri(r, 200, 450) / 10, fr = ri(r, 10, 40) / 10, c = (or - fr) * 0.65;
+      return { t: "The Operating Result is " + fmt(or, 1) + " MEUR, the Financial Result is −" + fmt(fr, 1) + " MEUR and the tax rate is 35 %. What is the Net Income?",
+        o: opts(c, [or * 0.65, or - fr, (or + fr) * 0.65], 1, " MEUR") };
+    },
+    c07: function (r) {
+      var base = ri(r, 30, 60) * 10000, ci = ri(r, 3, 9) * 10, c = base * ci / 100;
+      return { t: "Two companies have exactly the same marketing mix. Company A has a Competitiveness Index of 100 and a sales potential of " + fmt(base, 0) + " units. Company B has a Competitiveness Index of " + ci + ". What is the sales potential of Company B?",
+        o: opts(c, [base * (100 - ci) / 100, base, c / 2], 0, " units") };
+    },
+    c08: function (r) {
+      var units = ri(r, 300, 500) * 1000 + ri(r, 0, 999), price = ri(r, 44, 56) * 10, c = units * price / 1e6;
+      return { t: "Your company sold " + fmt(units, 0) + " washing machines at a price of " + price + " EUR each. What is the revenue?",
+        o: opts(c, [c * 10, c / 10, c * 0.65], 2, " MEUR") };
+    },
+    c09: function (r) {
+      var i1 = ri(r, 0, 4), i2 = (i1 + ri(r, 1, 4)) % 5;
+      var home = ri(r, 1500, 2500) / 10, other = ri(r, 200, 800) / 10, c = home / (home + other) * 100;
+      return { t: "Your company is active in two regions: " + REGIONS[i1] + " with a revenue of " + fmt(home, 1) + " MEUR and " + REGIONS[i2] + " with " + fmt(other, 1) + " MEUR. What is the 'Share Company Revenue' of " + REGIONS[i1] + "?",
+        o: opts(c, [other / (home + other) * 100, 100, other / home * 100], 1, " %") };
+    }
+  };
+
+  var TITLES = { c01: "Calculate Return on Sales", c02: "Debt Ratio from Equity Ratio", c03: "Calculate Equity Ratio", c04: "Market Share Revenue in Region", c05: "Calculate Plant Utilization", c06: "Net Income from Operating Result", c07: "Sales potential from Competitiveness Index", c08: "Revenue from units and price", c09: "Share Company Revenue" };
+
+  // ---------- questions from the real seminar results (option 0 is correct) ----------
+  function optsAny(c, cands, d, f, o) {
+    o = o || {};
+    var out = [round(c, d)], step = o.step || Math.max(Math.abs(c) * 0.2, Math.pow(10, -d) * 5);
+    function add(v) {
+      v = round(v, d);
+      if (out.length >= 4 || !isFinite(v)) return;
+      if (o.min != null && v < o.min) return;
+      for (var i = 0; i < out.length; i++) {
+        if (Math.abs(out[i] - v) < Math.max(Math.abs(out[i]) * 0.04, Math.pow(10, -d) * 2, o.gap || 0)) return;
+      }
+      out.push(v);
+    }
+    cands.forEach(add);
+    [c * 0.8, c * 1.25, c + step, c - step, c + 2 * step, c - 2 * step, c * 0.6, c * 1.5].forEach(add);
+    for (var k = 3; k < 12 && out.length < 4; k++) { add(c + k * step); add(c - k * step); }
+    return out.map(f);
+  }
+  function isNum(v) { return typeof v === "number" && isFinite(v); }
+  function co(c) { return "Company " + String(c).slice(1); }
+  function pctF(v) { return fmt(v, 1) + " %"; }
+  function spctF(v) { return (v > 0 ? "+" : "") + fmt(v, 1) + " %"; }
+  function meurF(v) { return fmt(v, 1) + " MEUR"; }
+  function smeur(v) { return (v > 0 ? "+" : "") + fmt(v, 2); }
+  function unitsF(v) { return fmt(v, 0) + " units"; }
+  function eurF(v) { return fmt(v, 0) + " EUR"; }
+  function dPeriods() { return Object.keys(DATA.periods).map(Number).sort(function (a, b) { return a - b; }); }
+  function dRow(p, c) { var P = DATA.periods[String(p)]; return P ? P[c] || null : null; }
+  function dComps(p) { return Object.keys(DATA.periods[String(p)] || {}).sort(); }
+  function each(fn) {
+    var out = [];
+    dPeriods().forEach(function (p) {
+      dComps(p).forEach(function (c) { var x = fn(p, c, dRow(p, c), dRow(p - 1, c)); if (x) out.push(x); });
+    });
+    return out;
+  }
+  function perPeriod(fn) {
+    var out = [];
+    dPeriods().forEach(function (p) { var x = fn(p, dComps(p).map(function (c) { return { c: c, x: dRow(p, c) }; })); if (x) out.push(x); });
+    return out;
+  }
+  function others(list, top, r, n) {
+    var rest = shuffle(list.filter(function (e) { return e.c !== top.c; }), r).slice(0, n);
+    return [top].concat(rest);
+  }
+  var RATING = ["AAA", "AA", "A", "BBB", "BB", "B", "CCC", "CC", "C", "D"];
+
+  var DT = {
+    d01: { title: "Return on Sales of a seminar company",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.rev) || !isNum(x.ni) || x.rev <= 0) return null;
+        var v = x.ni / x.rev * 100;
+        if (isNum(x.ros) && Math.abs(v - x.ros) > 0.2) return null;
+        return { p: p, c: c, rev: x.rev, ni: x.ni, v: v };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " had a Revenue Global of " + fmt(i.rev, 2) + " MEUR and a Net Income of " + fmt(i.ni, 2) + " MEUR. What was its Return on Sales?",
+        o: optsAny(i.v, [i.ni !== 0 ? i.rev / i.ni : NaN, i.v * 2, (i.rev - i.ni) / i.rev * 100], 1, pctF) }; } },
+    d02: { title: "Average price per unit of a seminar company",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.rev) || !isNum(x.units) || x.rev <= 0 || x.units <= 0) return null;
+        return { p: p, c: c, rev: x.rev, units: x.units, v: x.rev * 1e6 / x.units };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " sold " + fmt(i.units, 0) + " washing machines worldwide and had a Revenue Global of " + fmt(i.rev, 2) + " MEUR. What was the average price per washing machine?",
+        o: optsAny(i.v, [i.v * 1.12, i.v * 0.88, i.v * 1.35], 0, eurF) }; } },
+    d03: { title: "Net Income from Operating and Financial Result",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.or) || !isNum(x.fr) || !isNum(x.ni) || x.or + x.fr <= 0) return null;
+        var v = (x.or + x.fr) * 0.65;
+        if (Math.abs(v - x.ni) > 0.15) return null;   // e.g. loss carry-forward: skip
+        return { p: p, c: c, or: x.or, fr: x.fr, v: v };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " had an Operating Result of " + fmt(i.or, 2) + " MEUR and a Financial Result of " + smeur(i.fr) + " MEUR. The tax rate is 35 %. What was its Net Income?",
+        o: optsAny(i.v, [i.or * 0.65, i.or + i.fr, (i.or - i.fr) * 0.65], 1, meurF) }; } },
+    d04: { title: "Balance sheet total from Equity and Equity Ratio",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.eq) || !isNum(x.er) || x.eq <= 0 || x.er <= 0) return null;
+        return { p: p, c: c, eq: x.eq, er: x.er, v: x.eq / (x.er / 100) };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " had an Equity of " + fmt(i.eq, 2) + " MEUR and an Equity Ratio of " + fmt(i.er, 2) + " %. What was its balance sheet total (total capital)?",
+        o: optsAny(i.v, [i.eq * i.er / 100, i.eq / (1 - i.er / 100), i.eq * (1 + i.er / 100)], 1, meurF) }; } },
+    d05: { title: "Debt Ratio of a seminar company",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.er)) return null;
+        var v = 100 - x.er;
+        if (isNum(x.dr) && Math.abs(v - x.dr) > 0.1) return null;
+        return { p: p, c: c, er: x.er, v: v };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", the Executive Summary of " + co(i.c) + " shows an Equity Ratio of " + fmt(i.er, 2) + " %. What is its Debt Ratio?",
+        o: optsAny(i.v, [i.er, i.v + 10, i.v / 2], 2, function (v) { return fmt(v, 2) + " %"; }) }; } },
+    d06: { title: "Revenue growth of a seminar company",
+      inst: function () { return each(function (p, c, x, y) {
+        if (!x || !y || !isNum(x.rev) || !isNum(y.rev) || x.rev <= 0 || y.rev <= 0) return null;
+        return { p: p, c: c, r0: y.rev, r1: x.rev, v: (x.rev / y.rev - 1) * 100 };
+      }); },
+      make: function (i) { return { t: co(i.c) + "'s Revenue Global went from " + fmt(i.r0, 2) + " MEUR in Period " + (i.p - 1) + " to " + fmt(i.r1, 2) + " MEUR in Period " + i.p + ". By how many percent did its revenue change?",
+        o: optsAny(i.v, [i.r1 - i.r0, (i.r0 / i.r1 - 1) * 100, i.v * 2], 1, spctF, { step: Math.max(Math.abs(i.v) * 0.3, 2) }) }; } },
+    d07: { title: "Final inventory of finished products",
+      inst: function () { return each(function (p, c, x, y) {
+        if (!x || !y || !isNum(y.inv) || !isNum(x.prod) || !isNum(x.units) || !isNum(x.inv)) return null;
+        var b = isNum(x.bought) ? x.bought : 0;
+        if (Math.abs(y.inv + x.prod + b - x.units - x.inv) > 2) return null;
+        return { p: p, c: c, i0: y.inv, prod: x.prod, b: b, units: x.units, v: x.inv };
+      }); },
+      make: function (i) { return { t: co(i.c) + " started Period " + i.p + " with " + fmt(i.i0, 0) + " finished washing machines in stock. In Period " + i.p + " it produced " + fmt(i.prod, 0) + " units" + (i.b > 0 ? ", bought " + fmt(i.b, 0) + " finished units from partners" : "") + " and sold " + fmt(i.units, 0) + " units. How many finished washing machines were in stock at the end of the period?",
+        o: optsAny(i.v, [i.prod - i.units, i.i0 + i.units - i.prod, i.i0 + i.prod - i.units - i.b - 10000], 0, unitsF, { min: 0, step: 10000, gap: 1000 }) }; } },
+    d08: { title: "Which company had the highest Return on Sales?",
+      inst: function () { return perPeriod(function (p, rows) {
+        var l = rows.filter(function (e) { return e.x && isNum(e.x.rev) && isNum(e.x.ni) && e.x.rev > 0; })
+          .map(function (e) { return { c: e.c, rev: e.x.rev, ni: e.x.ni, v: e.x.ni / e.x.rev * 100 }; })
+          .sort(function (a, b) { return b.v - a.v; });
+        if (l.length < 4 || l[0].v - l[1].v < 0.3) return null;
+        return { p: p, l: l };
+      }); },
+      make: function (i, r) {
+        var pick = others(i.l, i.l[0], r, 3), shown = pick.slice().sort(function (a, b) { return a.c < b.c ? -1 : 1; });
+        return { t: "Period " + i.p + ": " + shown.map(function (e) { return co(e.c) + " had a revenue of " + fmt(e.rev, 2) + " MEUR and a net income of " + fmt(e.ni, 2) + " MEUR"; }).join("; ") + ". Which of these companies had the highest Return on Sales?",
+          o: pick.map(function (e) { return co(e.c); }) };
+      } },
+    d09: { title: "Which company had the highest Equity Ratio?",
+      inst: function () { return perPeriod(function (p, rows) {
+        var l = rows.filter(function (e) { return e.x && isNum(e.x.dr); })
+          .map(function (e) { return { c: e.c, v: e.x.dr }; })
+          .sort(function (a, b) { return a.v - b.v; });
+        if (l.length < 4 || l[1].v - l[0].v < 0.3) return null;
+        return { p: p, l: l };
+      }); },
+      make: function (i, r) {
+        var pick = others(i.l, i.l[0], r, 3), shown = pick.slice().sort(function (a, b) { return a.c < b.c ? -1 : 1; });
+        return { t: "Period " + i.p + ", Debt Ratios from the Executive Summary: " + shown.map(function (e) { return co(e.c) + " " + fmt(e.v, 2) + " %"; }).join("; ") + ". Which of these companies had the highest Equity Ratio?",
+          o: pick.map(function (e) { return co(e.c); }) };
+      } },
+    d10: { title: "Meaning of a low Planning Quality",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.pq) || x.pq >= 90) return null;
+        var best = Math.max.apply(null, dComps(p).map(function (k) { var y = dRow(p, k); return y && isNum(y.pq) ? y.pq : 0; }));
+        return { p: p, c: c, pq: x.pq, best: best };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " had a Planning Quality of " + fmt(i.pq, 1) + (i.best > i.pq + 1 ? " (the best company reached " + fmt(i.best, 1) + ")" : "") + ". What does this tell you?",
+        o: ["Its actual sales and revenue were clearly different from its own planned values", "Its washing machines had quality problems", "It handed in its decisions late", "Its plants were not maintained well"] }; } },
+    d11: { title: "Net Income up, Share Price down",
+      inst: function () { return each(function (p, c, x, y) {
+        if (!x || !y || !isNum(x.ni) || !isNum(y.ni) || !isNum(x.sp) || !isNum(y.sp)) return null;
+        if (!(x.ni > y.ni && x.sp < y.sp)) return null;
+        return { p: p, c: c, n0: y.ni, n1: x.ni, s0: y.sp, s1: x.sp };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " increased its Net Income from " + fmt(i.n0, 2) + " to " + fmt(i.n1, 2) + " MEUR, but its Share Price fell from " + fmt(i.s0, 2) + " to " + fmt(i.s1, 2) + " EUR. How is this possible?",
+        o: ["The Share Price combines several weighted KPIs, and others (for example Debt Ratio or Planning Quality) got worse", "The Share Price depends only on the market share", "It is a calculation error: a higher Net Income always raises the Share Price", "The Share Price depends only on the Cash Balance"] }; } },
+    d12: { title: "How to avoid an Overdraft Loan",
+      inst: function () { return each(function (p, c, x) {
+        if (!x || !isNum(x.od) || x.od < 0.05) return null;
+        return { p: p, c: c, od: x.od };
+      }); },
+      make: function (i) { return { t: "In Period " + i.p + ", " + co(i.c) + " had to take an Overdraft Loan of " + fmt(i.od, 2) + " MEUR. Which decision would most likely have avoided it?",
+        o: ["Planning the cash flow and arranging a cheaper short- or long-term loan in advance", "Producing more units for stock", "Increasing the advertising budget", "Building an additional plant"] }; } },
+    d13: { title: "Consequence of a rating change",
+      inst: function () { return each(function (p, c, x, y) {
+        if (!x || !y) return null;
+        var a = RATING.indexOf(String(y.rating)), b = RATING.indexOf(String(x.rating));
+        if (a < 0 || b < 0 || a === b) return null;
+        return { p: p, c: c, r0: y.rating, r1: x.rating, worse: b > a };
+      }); },
+      make: function (i) {
+        var up = "Interest rates for new loans go up", down = "Interest rates for new loans go down";
+        return { t: "The rating of " + co(i.c) + " changed from " + i.r0 + " to " + i.r1 + " in Period " + i.p + ". What does this mean for the next period?",
+          o: [i.worse ? up : down, i.worse ? down : up, "All loans must be repaid immediately", "Nothing changes, the rating only matters at the end of the game"] };
+      } }
+  };
+  Object.keys(DT).forEach(function (id) { TITLES[id] = DT[id].title; });
+  var DCACHE = {};
+  function dInst(id) { return DCACHE[id] || (DCACHE[id] = HAS_DATA ? DT[id].inst() : []); }
+
+  // ---------- building one participant's test ----------
+  function pool(cat) {
+    if (cat === "calc") return Object.keys(CALC).sort();
+    if (cat === "data") return Object.keys(DT).filter(function (id) { return dInst(id).length > 0; }).sort();
+    return Object.keys(BANK.q).filter(function (id) { return BANK.q[id].cat === cat; }).sort();
+  }
+  function makeQuestion(id, seed) {
+    var q;
+    if (DT[id]) {
+      var r = rng(seed + "|" + id + "|v"), list = dInst(id);
+      var d = DT[id].make(list[Math.floor(r() * list.length)], r);
+      q = { id: id, cat: "data", kind: "calc", t: d.t, o: d.o };
+    } else if (CALC[id]) {
+      var g = CALC[id](rng(seed + "|" + id + "|v"));
+      q = { id: id, cat: "calc", kind: "calc", t: g.t, o: g.o };
+    } else {
+      var b = BANK.q[id];
+      q = { id: id, cat: b.cat, kind: "fix", t: b.t, o: b.o };
+    }
+    var order = shuffle(q.o.map(function (_, k) { return k; }), rng(seed + "|" + id + "|o"));
+    q.opts = order.map(function (k) { return { k: k, t: q.o[k] }; });
+    return q;
+  }
+  function buildTest(code, sid) {
+    var seed = code + "|" + sid + "|" + BANK.version;
+    var r = rng(seed + "|pick"), ids = [];
+    PLAN.forEach(function (p) {
+      var got = shuffle(pool(p.cat), r).slice(0, p.n);
+      // too few seminar-data templates for this data set: fill up with generic calculations
+      if (got.length < p.n) got = got.concat(shuffle(pool("calc"), r).slice(0, p.n - got.length));
+      ids = ids.concat(got);
+    });
+    ids = shuffle(ids, rng(seed + "|order"));
+    return ids.map(function (id) { return makeQuestion(id, seed); });
+  }
+  function correctK(q) { return q.kind === "calc" ? 0 : (KEY ? KEY[q.id] : null); }
+  // Student build: the key exists only as hashes (KEYH), enough to count the score.
+  function keyHash(id, k) { return hash("kh|" + BANK.version + "|" + id + "|" + k) % 1000003; }
+  function isCorrect(q, a) {
+    if (a == null || a < 0) return false;
+    if (q.kind === "calc" || KEY) return a === correctK(q);
+    return typeof KEYH !== "undefined" && KEYH !== null && KEYH[q.id] === keyHash(q.id, a);
+  }
+  function score(test, answers) {
+    return test.reduce(function (s, q, i) { return s + (isCorrect(q, answers[i]) ? 1 : 0); }, 0);
+  }
+  var TOTAL = PLAN.reduce(function (s, p) { return s + p.n; }, 0);
+
+  // ---------- result codes ----------
+  function b64url(str) {
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).split("+").join("-").split("/").join("_").split("=").join("");
+  }
+  function unb64url(s) {
+    s = s.split("-").join("+").split("_").join("/");
+    while (s.length % 4) s += "=";
+    var bin = atob(s), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function chk(body) { var h = hash(RESULT_SALT + body).toString(36); while (h.length < 6) h = "0" + h; return h.slice(-6); }
+  function encodeResult(p) {
+    var body = b64url(JSON.stringify(p));
+    return "MGE1." + body + "." + chk(body);
+  }
+  function decodeResult(code) {
+    var parts = String(code).trim().split(".");
+    if (parts.length !== 3 || parts[0] !== "MGE1") return { ok: false, error: "Not a result code" };
+    var data;
+    try { data = JSON.parse(unb64url(parts[1])); } catch (e) { return { ok: false, error: "Code is incomplete or damaged" }; }
+    return { ok: true, intact: chk(parts[1]) === parts[2], data: data };
+  }
+  function receipt(code) { return String(code).slice(-6).toUpperCase(); }
+
+  return {
+    MINUTES: MINUTES, TOTAL: TOTAL, PLAN: PLAN, CAT_LABEL: CAT_LABEL, CALC: CALC, DT: DT, TITLES: TITLES, HAS_DATA: HAS_DATA,
+    hash: hash, rng: rng, normCode: normCode, normId: normId, cleanName: cleanName, nameKey: nameKey, validCode: validCode,
+    prettyCode: prettyCode, newCode: newCode, buildTest: buildTest, makeQuestion: makeQuestion,
+    pool: pool, correctK: correctK, keyHash: keyHash, isCorrect: isCorrect, score: score, encodeResult: encodeResult, decodeResult: decodeResult, chk: chk, receipt: receipt
+  };
+})();
+
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var PREFIX = "mge-test-v1:";
+  var S = null, test = null, cur = 0, timerId = null, awayAt = null;
+  // Date mode (GitHub Pages): the test date comes from the link, answers go to a Google Form.
+  // Without FORM_CFG (claude.ai artifact, single file) the access code and result code are used.
+  var DM = typeof FORM_CFG !== "undefined" && FORM_CFG !== null && !!FORM_CFG.url;
+  var TEST_DATE = null;
+
+  function isDate(s) {
+    if (!s || s.length !== 10 || s.charAt(4) !== "-" || s.charAt(7) !== "-") return false;
+    return s.split("-").join("").split("").every(function (c) { return "0123456789".indexOf(c) >= 0; });
+  }
+  function urlDate() {
+    var all = location.pathname + "/" + location.search + "/" + location.hash;
+    var parts = all.split("?").join("/").split("=").join("/").split("&").join("/").split("#").join("/").split("/");
+    for (var i = 0; i < parts.length; i++) if (isDate(parts[i])) return parts[i];
+    return null;
+  }
+  function berlinToday() {
+    try {
+      var o = {};
+      new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit" })
+        .formatToParts(new Date()).forEach(function (x) { o[x.type] = x.value; });
+      return o.year + "-" + o.month + "-" + o.day;
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  function german(d) { var p = d.split("-"); return p[2] + "." + p[1] + "." + p[0]; }
+
+  if (DM) {
+    $("code-field").hidden = true;
+    $("rule-result").textContent = "When you submit, your result is saved automatically and you see how many percent of the questions you answered correctly.";
+    var d = urlDate(), closed = "";
+    if (!d) closed = "Please open the test with the link from your instructor.";
+    else if (d !== berlinToday()) closed = "This test link is for " + german(d) + ". It is not open today.";
+    if (closed) {
+      $("closed").hidden = false; $("closed").textContent = closed;
+      $("start-form").hidden = true;
+    } else {
+      TEST_DATE = d;
+      $("f-date").hidden = false; $("f-date").textContent = "Test of " + german(d);
+    }
+  }
+
+  function load(k) { try { var s = localStorage.getItem(k); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+  function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function skey(code, sid) { return PREFIX + code + ":" + sid; }
+  function save() { if (S) store(skey(S.code, S.sid), S); }
+  function show(v) { ["v-start", "v-test", "v-done"].forEach(function (x) { $(x).hidden = x !== v; }); window.scrollTo(0, 0); }
+  function active() { return S && !S.submitted && !$("v-test").hidden; }
+
+  // Sends one record to the Google Form. The response is opaque (no-cors), so only
+  // network errors are visible; the backend script processes the record.
+  function post(kind, data, ok, fail) {
+    var body = new URLSearchParams();
+    body.append(FORM_CFG.name, S.name);
+    body.append(FORM_CFG.type, kind);
+    body.append(FORM_CFG.data, JSON.stringify(data));
+    var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var t = ctl ? setTimeout(function () { ctl.abort(); }, 20000) : null;
+    var opts = { method: "POST", mode: "no-cors", body: body };
+    if (ctl) opts.signal = ctl.signal;
+    fetch(FORM_CFG.url, opts).then(function () { clearTimeout(t); if (ok) ok(); }, function () { clearTimeout(t); if (fail) fail(); });
+  }
+  function payload() {
+    return {
+      v: 1, b: BANK.version, c: S.code, m: S.sid, n: S.name, a: S.answers,
+      s: Math.round(S.t0 / 1000), e: Math.round(S.t1 / 1000),
+      l: S.leaves, w: S.away, x: S.auto ? 1 : 0, o: S.other || 0
+    };
+  }
+
+  // ----- start -----
+  $("f-code").addEventListener("input", function () {
+    var n = MGE.normCode(this.value).slice(0, 6);
+    var pretty = n.length > 4 ? n.slice(0, 4) + "-" + n.slice(4) : n;
+    if (this.value !== pretty) this.value = pretty;
+  });
+  $("start-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = MGE.cleanName($("f-name").value);
+    var sid = MGE.nameKey(name), code = DM ? TEST_DATE : MGE.normCode($("f-code").value);
+    var err = "";
+    if (DM && TEST_DATE !== berlinToday()) err = "This test is not open today.";
+    else if (name.split(" ").length < 2 || sid.length < 4) err = "Please enter your first and last name.";
+    else if (!DM && !MGE.validCode(code)) err = "This access code is not valid. Check it with your instructor (format XXXX-XX).";
+    else if (!$("f-honor").checked) err = "Please confirm that you will work on your own.";
+    $("f-err").hidden = !err; $("f-err").textContent = err;
+    if (err) return;
+
+    var existing = load(skey(code, sid)), fresh = !existing;
+    if (existing) { S = existing; }
+    else {
+      var list = load(PREFIX + "sessions") || [];
+      var others = list.filter(function (x) { return x.code === code && x.sid !== sid; }).length;
+      list.push({ code: code, sid: sid });
+      store(PREFIX + "sessions", list);
+      S = { v: 1, code: code, sid: sid, name: name, t0: Date.now(), answers: [], leaves: 0, away: 0, other: others, submitted: false };
+    }
+    test = MGE.buildTest(S.code, S.sid);
+    if (!S.answers.length) S.answers = test.map(function () { return -1; });
+    save();
+    if (DM && fresh) post("start", { v: 1, b: BANK.version, c: S.code, m: S.sid, n: S.name, s: Math.round(S.t0 / 1000), o: S.other || 0 });
+    if (S.submitted) { renderDone(); if (DM && !S.saved) sendResult(); return; }
+    startView();
+  });
+
+  // ----- test -----
+  function startView() {
+    show("v-test");
+    $("t-name").textContent = S.name;
+    cur = 0;
+    buildNav(); render(); updateAway(); tick();
+    timerId = setInterval(tick, 500);
+  }
+  function tick() {
+    var left = S.t0 + MGE.MINUTES * 60000 - Date.now();
+    if (left <= 0) { $("timer").textContent = "00:00"; submit(true); return; }
+    var s = Math.ceil(left / 1000), m = Math.floor(s / 60), r = s % 60;
+    $("timer").textContent = (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+    $("timer").className = "timer" + (left < 60000 ? " crit" : left < 300000 ? " warn" : "");
+  }
+  function answered() { return S.answers.filter(function (a) { return a >= 0; }).length; }
+  function buildNav() {
+    var nav = $("qnav"); nav.textContent = "";
+    test.forEach(function (_, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = String(i + 1);
+      b.setAttribute("aria-label", "Question " + (i + 1));
+      b.addEventListener("click", function () { cur = i; render(); });
+      nav.appendChild(b);
+    });
+  }
+  function render() {
+    var q = test[cur];
+    $("q-num").textContent = "Question " + (cur + 1) + " of " + test.length;
+    $("q-cat").textContent = MGE.CAT_LABEL[q.cat];
+    $("q-text").textContent = q.t;
+    var box = $("q-opts"); box.textContent = "";
+    q.opts.forEach(function (o, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", S.answers[cur] === o.k ? "true" : "false");
+      var lt = document.createElement("span"); lt.className = "lt"; lt.textContent = "ABCD"[i];
+      var tx = document.createElement("span"); tx.textContent = o.t;
+      b.appendChild(lt); b.appendChild(tx);
+      b.addEventListener("click", function () { choose(o.k); });
+      box.appendChild(b);
+    });
+    $("prev").disabled = cur === 0;
+    $("next").textContent = cur === test.length - 1 ? "Overview" : "Next";
+    Array.prototype.forEach.call($("qnav").children, function (b, i) {
+      b.className = (S.answers[i] >= 0 ? "done" : "") + (i === cur ? " cur" : "");
+      if (i === cur) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+    });
+    $("t-progress").textContent = answered() + " of " + test.length + " answered";
+    $("confirm").hidden = true;
+  }
+  function choose(k) { if (!active()) return; S.answers[cur] = k; save(); render(); }
+  $("prev").addEventListener("click", function () { if (cur > 0) { cur--; render(); } });
+  $("next").addEventListener("click", function () {
+    if (cur < test.length - 1) { cur++; render(); } else { $("finish").click(); }
+  });
+  $("finish").addEventListener("click", function () {
+    var open = test.length - answered();
+    $("confirm-text").textContent = open
+      ? "You have " + open + " unanswered question" + (open > 1 ? "s" : "") + ". They count as wrong. Do you want to submit now? You cannot change your answers afterwards."
+      : "All questions are answered. Submit now? You cannot change your answers afterwards.";
+    $("confirm").hidden = false;
+    $("c-submit").focus();
+  });
+  $("c-back").addEventListener("click", function () { $("confirm").hidden = true; });
+  $("c-submit").addEventListener("click", function () { submit(false); });
+  document.addEventListener("keydown", function (e) {
+    if (!active() || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (calcOpen()) {
+      if (calcKey(e.key)) { e.preventDefault(); return; }
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    }
+    var k = e.key.toUpperCase(), i = "ABCD".indexOf(k);
+    if (i < 0) i = "1234".indexOf(k);
+    if (i >= 0 && test[cur].opts[i]) { choose(test[cur].opts[i].k); }
+    else if (e.key === "ArrowRight" && cur < test.length - 1) { cur++; render(); }
+    else if (e.key === "ArrowLeft" && cur > 0) { cur--; render(); }
+  });
+
+  // ----- built-in calculator -----
+  var CALC_KEYS = [["C", "(", ")", "/"], ["7", "8", "9", "*"], ["4", "5", "6", "-"], ["1", "2", "3", "+"], ["0", ".", "back", "="]];
+  var CALC_SHOW = { "/": "÷", "*": "×", "-": "−", back: "⌫" };
+  var calc = { expr: "", done: false, shown: "", err: "", hist: [] };
+  var DIGITS = "0123456789", OPS = "+-*/";
+  function calcOpen() { return !$("calc").hidden; }
+  function setCalc(on) {
+    $("calc").hidden = !on;
+    $("calc-toggle").setAttribute("aria-expanded", on ? "true" : "false");
+    document.body.classList.toggle("calc-open", on);
+  }
+  function calcEval(s) {
+    var open = s.split("(").length - s.split(")").length;
+    while (open-- > 0) s += ")";
+    var i = 0;
+    function peek() { return s.charAt(i); }
+    function num() {
+      var st = i;
+      while (i < s.length && (DIGITS + ".").indexOf(s.charAt(i)) >= 0) i++;
+      var t = s.slice(st, i);
+      if (!t || t === "." || t.split(".").length > 2) throw new Error("input");
+      return parseFloat(t);
+    }
+    function factor() {
+      var c = peek();
+      if (c === "-") { i++; return -factor(); }
+      if (c === "+") { i++; return factor(); }
+      if (c === "(") { i++; var v = expr(); if (peek() !== ")") throw new Error("input"); i++; return v; }
+      return num();
+    }
+    function term() {
+      var v = factor();
+      while (peek() === "*" || peek() === "/") {
+        var op = s.charAt(i++), r = factor();
+        if (op === "/" && r === 0) throw new Error("zero");
+        v = op === "*" ? v * r : v / r;
+      }
+      return v;
+    }
+    function expr() {
+      var v = term();
+      while (peek() === "+" || peek() === "-") { var op = s.charAt(i++), r = term(); v = op === "+" ? v + r : v - r; }
+      return v;
+    }
+    var v = expr();
+    if (i !== s.length || !isFinite(v)) throw new Error("input");
+    return v;
+  }
+  function calcRaw(v) {
+    var r = parseFloat(v.toPrecision(12));
+    if (r === 0) return "0";
+    if (Math.abs(r) >= 1e15 || Math.abs(r) < 1e-6) return r.toExponential(6);
+    return String(r);
+  }
+  function calcPretty(raw) {
+    if (raw.indexOf("e") >= 0) return raw;
+    var neg = raw.charAt(0) === "-", s = neg ? raw.slice(1) : raw, parts = s.split("."), int = parts[0], out = "";
+    while (int.length > 3) { out = "," + int.slice(-3) + out; int = int.slice(0, -3); }
+    return (neg ? "−" : "") + int + out + (parts.length > 1 ? "." + parts[1] : "");
+  }
+  function calcShowExpr(s) {
+    var out = "";
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charAt(i), prev = i > 0 ? s.charAt(i - 1) : "";
+      var unary = c === "-" && (i === 0 || OPS.indexOf(prev) >= 0 || prev === "(");
+      if (OPS.indexOf(c) >= 0 && !unary) out += " " + (c === "+" ? "+" : CALC_SHOW[c]) + " ";
+      else out += c === "-" ? "−" : c;
+    }
+    return out;
+  }
+  function calcPress(k) {
+    var last = calc.expr.slice(-1);
+    calc.err = "";
+    if (k === "C") { calc.expr = ""; calc.done = false; calc.shown = ""; }
+    else if (k === "back") { calc.done = false; calc.expr = calc.expr.slice(0, -1); }
+    else if (k === "=") {
+      if (!calc.expr || calc.done) { renderCalc(); return; }
+      try {
+        var raw = calcRaw(calcEval(calc.expr));
+        calc.hist.unshift({ text: calcShowExpr(calc.expr) + " = " + calcPretty(raw), raw: raw });
+        calc.hist = calc.hist.slice(0, 3);
+        calc.shown = calcShowExpr(calc.expr) + " =";
+        calc.expr = raw.indexOf("e") >= 0 ? "" : raw; calc.done = true;
+        calc.result = raw;
+      } catch (e) { calc.err = e.message === "zero" ? "Cannot divide by 0" : "Check the input"; }
+    }
+    else if (DIGITS.indexOf(k) >= 0 || k === ".") {
+      if (calc.done) { calc.expr = ""; calc.done = false; }
+      last = calc.expr.slice(-1);
+      if (last === ")") calc.expr += "*";
+      if (k === ".") {
+        var seg = calc.expr.split("+").join("|").split("-").join("|").split("*").join("|").split("/").join("|").split("(").join("|").split("|").pop();
+        if (seg.indexOf(".") >= 0) { renderCalc(); return; }
+        if (!seg) calc.expr += "0";
+      }
+      if (calc.expr.length < 60) calc.expr += k;
+    }
+    else if (OPS.indexOf(k) >= 0) {
+      calc.done = false;
+      if (!calc.expr || last === "(") { if (k === "-") calc.expr += k; }
+      else if (OPS.indexOf(last) >= 0) {
+        var before = calc.expr.slice(-2, -1);
+        if (k === "-" && (last === "*" || last === "/")) calc.expr += k;
+        else if (OPS.indexOf(before) < 0 && before !== "(" && calc.expr.length > 1) calc.expr = calc.expr.slice(0, -1) + k;
+      }
+      else calc.expr += k;
+    }
+    else if (k === "(") {
+      if (calc.done) { calc.expr = ""; calc.done = false; }
+      last = calc.expr.slice(-1);
+      if (last && (DIGITS.indexOf(last) >= 0 || last === ")" || last === ".")) calc.expr += "*";
+      calc.expr += "(";
+    }
+    else if (k === ")") {
+      calc.done = false;
+      var opened = calc.expr.split("(").length - calc.expr.split(")").length;
+      if (opened > 0 && last !== "(" && OPS.indexOf(last) < 0) calc.expr += ")";
+    }
+    renderCalc();
+  }
+  function renderCalc() {
+    var val = $("calc-val");
+    val.className = "calc-val" + (calc.err ? " err" : "");
+    if (calc.err) { $("calc-expr").textContent = calcShowExpr(calc.expr); val.textContent = calc.err; }
+    else if (calc.done) { $("calc-expr").textContent = calc.shown; val.textContent = calcPretty(calc.result); }
+    else {
+      $("calc-expr").textContent = calcShowExpr(calc.expr);
+      var preview = "0";
+      try { if (calc.expr) preview = calcPretty(calcRaw(calcEval(calc.expr))); } catch (e) { preview = val.textContent; }
+      val.textContent = preview;
+    }
+    var h = $("calc-hist"); h.textContent = "";
+    calc.hist.forEach(function (x) {
+      var li = document.createElement("li");
+      li.textContent = x.text; li.title = "Use this result";
+      li.addEventListener("click", function () {
+        if (x.raw.indexOf("e") >= 0) return;
+        if (!calc.expr || calc.done) { calc.expr = x.raw; calc.done = false; }
+        else if (OPS.indexOf(calc.expr.slice(-1)) >= 0 || calc.expr.slice(-1) === "(") calc.expr += x.raw;
+        renderCalc();
+      });
+      h.appendChild(li);
+    });
+  }
+  function calcKey(key) {
+    var map = { ",": ".", x: "*", X: "*", ":": "/", Enter: "=", "=": "=", Backspace: "back", Delete: "C", c: "C", C: "C" };
+    if (key === "Escape") { setCalc(false); return true; }
+    var k = map[key] || key;
+    if (DIGITS.indexOf(k) >= 0 && k.length === 1 || ".+-*/()=".indexOf(k) >= 0 && k.length === 1 || k === "back" || k === "C") { calcPress(k); return true; }
+    return false;
+  }
+  CALC_KEYS.forEach(function (row) {
+    row.forEach(function (k) {
+      var b = document.createElement("button");
+      b.type = "button"; b.tabIndex = -1;
+      b.textContent = CALC_SHOW[k] || k;
+      b.setAttribute("aria-label", { "/": "divide", "*": "multiply", "-": "minus", "+": "plus", back: "delete last", C: "clear", "=": "equals" }[k] || k);
+      if (OPS.indexOf(k) >= 0) b.className = "op";
+      if (k === "=") b.className = "eq";
+      b.addEventListener("mousedown", function (e) { e.preventDefault(); });
+      b.addEventListener("click", function () { calcPress(k); });
+      $("calc-keys").appendChild(b);
+    });
+  });
+  $("calc-toggle").addEventListener("click", function () { setCalc(!calcOpen()); renderCalc(); });
+  $("calc-close").addEventListener("mousedown", function (e) { e.preventDefault(); });
+  $("calc-close").addEventListener("click", function () { setCalc(false); });
+
+  // ----- leaving the window -----
+  function away() { if (!active() || awayAt) return; awayAt = Date.now(); S.leaves++; save(); }
+  function back() {
+    if (!awayAt) return;
+    S.away += Math.round((Date.now() - awayAt) / 1000); awayAt = null; save(); updateAway();
+  }
+  function updateAway() {
+    $("away-warn").hidden = !S.leaves;
+    $("away-warn").textContent = "You left the test window " + S.leaves + (S.leaves === 1 ? " time" : " times") + ". This is recorded in your result.";
+  }
+  document.addEventListener("visibilitychange", function () { if (document.hidden) away(); else back(); });
+  window.addEventListener("blur", away);
+  window.addEventListener("focus", back);
+  ["copy", "cut", "contextmenu"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (active()) e.preventDefault(); });
+  });
+
+  // ----- submit -----
+  function submit(auto) {
+    if (!S || S.submitted) return;
+    back();
+    clearInterval(timerId);
+    setCalc(false);
+    S.t1 = Math.min(Date.now(), S.t0 + MGE.MINUTES * 60000 + 2000);
+    S.auto = !!auto; S.submitted = true;
+    S.score = MGE.score(test, S.answers);
+    S.result = MGE.encodeResult(payload());
+    save();
+    renderDone();
+    if (DM) sendResult();
+  }
+  function sendResult() {
+    $("d-retry-row").hidden = true;
+    $("d-saved").hidden = false; $("d-saved").className = "note"; $("d-saved").textContent = "Saving your result …";
+    post("result", payload(), function () {
+      S.saved = true; save(); renderDone();
+    }, function () {
+      S.fails = (S.fails || 0) + 1; save(); renderDone();
+    });
+  }
+  $("d-retry").addEventListener("click", sendResult);
+  function renderDone() {
+    show("v-done");
+    $("d-name").textContent = S.name.split(" ")[0];
+    var used = Math.round((S.t1 - S.t0) / 1000);
+    $("d-info").textContent = (S.auto ? "Time was up, so your answers were submitted automatically. " : "") +
+      (S.t1 ? "You answered " + S.answers.filter(function (a) { return a >= 0; }).length + " of " + S.answers.length +
+      " questions in " + Math.floor(used / 60) + " min " + (used % 60) + " s." : "");
+    if (S.score == null) S.score = MGE.score(test, S.answers);
+    var pc = Math.round(S.score / S.answers.length * 100);
+    $("d-pct").textContent = pc + " %";
+    $("d-score").textContent = S.score + " of " + S.answers.length + " questions answered correctly";
+    if (!S.result) S.result = MGE.encodeResult(payload());
+    $("d-code").value = S.result;
+    $("d-check").textContent = MGE.receipt(S.result);
+    if (!DM) return;
+    $("d-codepart").hidden = true;
+    if (S.saved) {
+      $("d-saved").hidden = false; $("d-saved").className = "note ok";
+      $("d-saved").textContent = "Your result has been saved. You can close this page.";
+      $("d-retry-row").hidden = true;
+    } else if (S.fails) {
+      $("d-saved").hidden = false; $("d-saved").className = "note bad";
+      $("d-saved").textContent = "Your result could not be sent yet. Check your internet connection and try again. Your answers are kept on this device.";
+      $("d-retry-row").hidden = false;
+      if (S.fails >= 2) {
+        $("d-codepart").hidden = false;
+        $("d-codehelp").textContent = "If saving keeps failing, copy this code and send it to your instructor. It contains your answers.";
+      }
+    }
+  }
+  $("d-copy").addEventListener("click", function () {
+    var ta = $("d-code");
+    function fallback() { ta.focus(); ta.select(); $("d-copied").textContent = "Code selected. Press Ctrl+C (or Cmd+C) to copy it."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ta.value).then(function () { $("d-copied").textContent = "Copied."; }, fallback);
+    } else fallback();
+  });
+})();
+</script>
+</body></html>
