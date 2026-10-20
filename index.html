@@ -831,6 +831,12 @@ var MGE = (function () {
   }
   var TOTAL = PLAN.reduce(function (s, p) { return s + p.n; }, 0);
 
+  // ---------- grades ----------
+  // The best result of the group gets 1.0; every point less adds 0.25; the worst grade is 2.25.
+  var GRADE = { best: 1, step: 0.25, worst: 2.25 };
+  function grade(sc, best) { return Math.min(GRADE.worst, GRADE.best + GRADE.step * Math.max(0, best - sc)); }
+  function gradeText(g) { var s = g.toFixed(2); if (s.slice(-1) === "0") s = s.slice(0, -1); return s.split(".").join(","); }
+
   // ---------- result codes ----------
   function b64url(str) {
     var bytes = new TextEncoder().encode(str), bin = "";
@@ -862,7 +868,7 @@ var MGE = (function () {
     MINUTES: MINUTES, TOTAL: TOTAL, PLAN: PLAN, CAT_LABEL: CAT_LABEL, CALC: CALC, DT: DT, REL: REL, CHART: CHART, TITLES: TITLES, HAS_DATA: HAS_DATA,
     hash: hash, rng: rng, normCode: normCode, normId: normId, cleanName: cleanName, nameKey: nameKey, validCode: validCode,
     prettyCode: prettyCode, newCode: newCode, buildTest: buildTest, makeQuestion: makeQuestion,
-    pool: pool, correctK: correctK, keyHash: keyHash, isCorrect: isCorrect, score: score, encodeResult: encodeResult, decodeResult: decodeResult, chk: chk, receipt: receipt
+    pool: pool, correctK: correctK, keyHash: keyHash, isCorrect: isCorrect, score: score, GRADE: GRADE, grade: grade, gradeText: gradeText, encodeResult: encodeResult, decodeResult: decodeResult, chk: chk, receipt: receipt
   };
 })();
 
