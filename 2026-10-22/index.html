@@ -84,6 +84,8 @@ form { display: grid; gap: 14px; background: var(--surface); border: 1px solid v
 .qhead span:first-child { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); }
 .chip { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
 .qtext { font-size: 1.2rem; font-weight: 600; line-height: 1.4; }
+.qchart { color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.qchart svg { display: block; width: 100%; height: auto; }
 .opts { display: flex; flex-direction: column; gap: 10px; }
 .opt { display: flex; gap: 12px; align-items: flex-start; text-align: left; font: inherit; color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 12px 14px; cursor: pointer; width: 100%; }
 .opt:hover { border-color: var(--accent); }
@@ -182,6 +184,7 @@ form { display: grid; gap: 14px; background: var(--surface); border: 1px solid v
     <article class="qcard" aria-live="polite">
       <div class="qhead"><span id="q-num"></span><span class="chip" id="q-cat"></span></div>
       <p id="q-text" class="qtext"></p>
+      <div id="q-chart" class="qchart" hidden></div>
       <div id="q-opts" class="opts" role="radiogroup" aria-labelledby="q-text"></div>
     </article>
     <div class="navrow">
@@ -231,9 +234,9 @@ form { display: grid; gap: 14px; background: var(--surface); border: 1px solid v
 
 <script>
 var FORM_CFG = {"url":"https://docs.google.com/forms/d/e/1FAIpQLSef7jBuk5zX-mc-cCh3rech_CYjfc-sl18WQPXHii6N6gSqrQ/formResponse","name":"entry.1497107227","type":"entry.140315379","data":"entry.426692637"};
-var BANK = {"version":"2026-10-20-probe","q":{"k01":{"id":"k01","cat":"kpi","t":"Revenue Global went up compared to the last period, but Net Income went down. Which explanation fits best?","o":["The equity ratio rose","Costs rose faster than revenue","The company sold fewer units","The share price fell"]},"k02":{"id":"k02","cat":"kpi","t":"How is 'Return on Sales' calculated?","o":["Net Income ÷ Equity × 100","Operating Result ÷ Equity × 100","Net Income ÷ Revenue × 100","Revenue ÷ units sold"]},"k03":{"id":"k03","cat":"kpi","t":"The Equity Ratio and the Debt Ratio of a company always add up to …","o":["100 %","50 %","the Return on Sales","the Share Price"]},"k04":{"id":"k04","cat":"kpi","t":"What does a Competitiveness Index of 100 in a region mean?","o":["The company reaches all potential customers in that market","The company has a market share of 100 %","The company sells exactly 100,000 units","The company has the lowest price in the market"]},"k05":{"id":"k05","cat":"kpi","t":"In the Executive Summary, your Competitiveness Index in one region is 0. What does this tell you?","o":["The market in that region is empty","The company cannot reach any customers there (for example because it is not active in that region)","There are no competitors in that region","The company is the market leader there"]},"k06":{"id":"k06","cat":"kpi","t":"What does 'Market Share Revenue in Region' show?","o":["The share of your production that was sold in that region","Your share of the total revenue of all washing machine sellers in that region","The revenue growth compared to the last period","The share of your own revenue that comes from that region"]},"k07":{"id":"k07","cat":"kpi","t":"'Share Company Revenue' is 100 % for Europe. What does this mean?","o":["The European market grew by 100 %","All of the company's revenue comes from Europe","The company sold its entire production","The company owns the whole European market"]},"k08":{"id":"k08","cat":"kpi","t":"Plant Utilization is only 77 %. What is the main consequence for costs?","o":["The fixed costs of the plant are spread over fewer units, so the cost per unit rises","The cost per unit falls because less is produced","The variable costs per unit double","There is no effect on costs"]},"k09":{"id":"k09","cat":"kpi","t":"Production Employee Utilization is 108 %. What does this mean for costs?","o":["Employees work overtime with a wage surcharge, so personnel costs per unit rise","The plant capacity grows permanently by 8 %","Costs per unit fall because the employees are fully used","Nothing, overtime is paid like normal working hours"]},"k10":{"id":"k10","cat":"kpi","t":"How can a company avoid an expensive Overdraft Loan?","o":["Increase the advertising budget","Build an additional plant","Plan the cash flow and arrange a cheaper short- or long-term loan in advance","Produce more units for stock"]},"k11":{"id":"k11","cat":"kpi","t":"The company's rating improves (for example from BBB to A). What happens to the interest rates?","o":["Nothing, the rating has no effect on interest","They go up in the next period","All long-term loans must be repaid","They go down in the next period"]},"k12":{"id":"k12","cat":"kpi","t":"The company finances a new plant with a large long-term loan. All else being equal, what happens to the Equity Ratio in the Executive Summary?","o":["It rises, because the loan increases the cash balance","It stays the same, because loans are not part of the capital","It rises, because the company now owns an additional plant","It falls, because total capital grows while equity stays the same"]},"k13":{"id":"k13","cat":"kpi","t":"What does 'Planning Quality' measure?","o":["How good the quality of your washing machines is","How close your actual results are to your planned sales and revenue","How many decisions were handed in on time","How well your plant is maintained"]},"k14":{"id":"k14","cat":"kpi","t":"The CSR-Index is determined by …","o":["your advertising budget","the number of sales employees","your market share","the sustainability of your plants and the CSR-Index of your suppliers"]},"k15":{"id":"k15","cat":"kpi","t":"How do you get from the Operating Result to the Net Income?","o":["Add the Financial Result and subtract taxes","Add the Cash Balance","Subtract the Equity","Multiply by the Share Price"]},"k16":{"id":"k16","cat":"kpi","t":"The Financial Result in the Executive Summary is negative. Where does it mainly come from?","o":["Advertising expenses","Interest paid on the company's loans","Losses from selling washing machines","Costs of building a plant"]},"k17":{"id":"k17","cat":"kpi","t":"Which decisions lower the Production Cost per Unit in the long run?","o":["Investing in training and process optimization to raise productivity","Building up a large stock of finished products","Raising the sales price","Raising the advertising budget"]},"k18":{"id":"k18","cat":"kpi","t":"Net Income rose, but the Share Price fell. How is this possible?","o":["The Share Price combines several weighted KPIs, and others (for example Debt Ratio or Planning Quality) got worse","The Share Price depends only on the market share","It is impossible: a higher Net Income always raises the Share Price","The Share Price depends only on the Cash Balance"]},"k19":{"id":"k19","cat":"kpi","t":"Which line of the Executive Summary tells you how many washing machines you sold in a region?","o":["Regional Result","Sales (Units)","Competitiveness Index","Plant Utilization"]},"k20":{"id":"k20","cat":"kpi","t":"A region shows high sales in units but a negative Regional Result. What is the most likely explanation?","o":["The market in that region is growing","The price is too low or the costs of serving that region (for example transport, tariffs, marketing) are too high","The Competitiveness Index in that region is too high","The company's equity ratio is too high"]},"s01":{"id":"s01","cat":"sim","t":"Which of these is NOT a form of market entry in Mastering Global Expansion?","o":["Sales partner","Own sales team","Production partner","Licensing the brand to a local company"]},"s07":{"id":"s07","cat":"sim","t":"Which three factors make up the Competitiveness Index?","o":["Market knowledge, company image and market barriers","Technology, ecology and price","Price, advertising and sales employees","Revenue, net income and equity"]},"s08":{"id":"s08","cat":"sim","t":"What does spending on Corporate Identity increase?","o":["The interest rate","The awareness of your company in all regions","The production capacity","The technology level of your product"]},"s09":{"id":"s09","cat":"sim","t":"Why can a local plant help you sell more in a region?","o":["Customers prefer local production, so market barriers go down","It removes all competitors from the region","It doubles the effect of your advertising","It automatically lowers the market price"]},"s10":{"id":"s10","cat":"sim","t":"When is your price usually in the 'inelastic' range, where small changes hardly affect demand?","o":["Always, demand never reacts to price","When it is 20–30 % below the market price","Only when it equals the lowest competitor price","When it is within about 3–5 % of the average market price"]},"s19":{"id":"s19","cat":"sim","t":"What does the training budget per production employee mainly improve?","o":["The CSR-Index","The market share","The awareness level","The Qualification Index and with it productivity"]},"s21":{"id":"s21","cat":"sim","t":"When is a sales partner usually a better choice than your own sales team?","o":["When you plan to stay in the market for many years and want to build your own knowledge","For a quick or uncertain market entry: the partner brings market knowledge and you avoid fixed costs","When you want to avoid paying commissions","When you want full control over sales"]},"s22":{"id":"s22","cat":"sim","t":"What is the main advantage of a production partner compared to your own plant?","o":["No large investment, and production is possible right away","The cost per unit is lower in every case","A higher CSR-Index is guaranteed","You can end the contract at any time"]},"s23":{"id":"s23","cat":"sim","t":"Why does the productivity per employee rise with the cumulative production volume?","o":["Because demand rises","Learning curve: with experience the work gets done faster","Because wages fall over time","Because the plant gets bigger automatically"]},"s24":{"id":"s24","cat":"sim","t":"You double the advertising budget in a region. What usually happens to sales?","o":["They double","They fall","They rise by more than double","They rise, but by less than double (diminishing returns)"]},"s25":{"id":"s25","cat":"sim","t":"Why should a new plant be financed with a long-term rather than a short-term loan?","o":["Short-term loans are not allowed for investments","Long-term loans have no interest","Long-term investments should be financed long-term, because the money comes back only over many years","Short-term loans lower the equity ratio, long-term loans do not"]},"s26":{"id":"s26","cat":"sim","t":"Demand rises for one period only. What is usually the better way to produce more?","o":["Use overtime instead of hiring new employees","Hire many new employees and dismiss them in the next period","Build a new plant","Double the training budget"]},"s27":{"id":"s27","cat":"sim","t":"Why should you buy market research before entering a new market?","o":["To learn about customer preferences and competitors and reduce the risk of a wrong decision","It automatically increases your market share","It lowers the import tariffs","It is required by law"]},"s28":{"id":"s28","cat":"sim","t":"Customers in one region are very price-sensitive. Which product decision can make sense there?","o":["Raise the technology level to the maximum","Set the price clearly above the market average","Offer a lower technology level there to cut variable costs and allow a lower price","Stop advertising in that region"]},"s29":{"id":"s29","cat":"sim","t":"You stop advertising and Corporate Identity spending. What happens to your awareness in a region?","o":["It drops to zero immediately","It decreases over time","It stays the same forever","It keeps rising"]},"s30":{"id":"s30","cat":"sim","t":"Why are import tariffs and transport costs called economic market barriers?","o":["They make it more expensive to serve the market from abroad","They lower the price customers pay","They only affect local competitors","They raise your Competitiveness Index"]}}};
+var BANK = {"version":"2026-10-21","q":{"k01":{"id":"k01","cat":"kpi","t":"Revenue Global went up compared to the last period, but Net Income went down. Which explanation fits best?","o":["Costs rose faster than revenue","The equity ratio rose","The company sold fewer units","The share price fell"]},"k02":{"id":"k02","cat":"kpi","t":"How is 'Return on Sales' calculated?","o":["Operating Result ÷ Equity × 100","Net Income ÷ Equity × 100","Net Income ÷ Revenue × 100","Revenue ÷ units sold"]},"k03":{"id":"k03","cat":"kpi","t":"The Equity Ratio and the Debt Ratio of a company always add up to …","o":["100 %","the Return on Sales","the Share Price","50 %"]},"k04":{"id":"k04","cat":"kpi","t":"What does a Competitiveness Index of 100 in a region mean?","o":["The company sells exactly 100,000 units","The company has a market share of 100 %","The company has the lowest price in the market","The company reaches all potential customers in that market"]},"k05":{"id":"k05","cat":"kpi","t":"In the Executive Summary, your Competitiveness Index in one region is 0. What does this tell you?","o":["There are no competitors in that region","The market in that region is empty","The company cannot reach any customers there (for example because it is not active in that region)","The company is the market leader there"]},"k06":{"id":"k06","cat":"kpi","t":"What does 'Market Share Revenue in Region' show?","o":["Your share of the total revenue of all washing machine sellers in that region","The share of your own revenue that comes from that region","The revenue growth compared to the last period","The share of your production that was sold in that region"]},"k07":{"id":"k07","cat":"kpi","t":"'Share Company Revenue' is 100 % for Europe. What does this mean?","o":["The company owns the whole European market","The company sold its entire production","All of the company's revenue comes from Europe","The European market grew by 100 %"]},"k08":{"id":"k08","cat":"kpi","t":"Plant Utilization is only 77 %. What is the main consequence for costs?","o":["There is no effect on costs","The fixed costs of the plant are spread over fewer units, so the cost per unit rises","The variable costs per unit double","The cost per unit falls because less is produced"]},"k09":{"id":"k09","cat":"kpi","t":"Production Employee Utilization is 108 %. What does this mean for costs?","o":["The plant capacity grows permanently by 8 %","Costs per unit fall because the employees are fully used","Employees work overtime with a wage surcharge, so personnel costs per unit rise","Nothing, overtime is paid like normal working hours"]},"k10":{"id":"k10","cat":"kpi","t":"How can a company avoid an expensive Overdraft Loan?","o":["Produce more units for stock","Build an additional plant","Increase the advertising budget","Plan the cash flow and arrange a cheaper short- or long-term loan in advance"]},"k11":{"id":"k11","cat":"kpi","t":"The company's rating improves (for example from BBB to A). What happens to the interest rates?","o":["They go up in the next period","All long-term loans must be repaid","They go down in the next period","Nothing, the rating has no effect on interest"]},"k12":{"id":"k12","cat":"kpi","t":"The company finances a new plant with a large long-term loan. All else being equal, what happens to the Equity Ratio in the Executive Summary?","o":["It rises, because the loan increases the cash balance","It rises, because the company now owns an additional plant","It falls, because total capital grows while equity stays the same","It stays the same, because loans are not part of the capital"]},"k13":{"id":"k13","cat":"kpi","t":"What does 'Planning Quality' measure?","o":["How well your plant is maintained","How good the quality of your washing machines is","How many decisions were handed in on time","How close your actual results are to your planned sales and revenue"]},"k14":{"id":"k14","cat":"kpi","t":"The CSR-Index is determined by …","o":["the sustainability of your plants and the CSR-Index of your suppliers","your advertising budget","your market share","the number of sales employees"]},"k15":{"id":"k15","cat":"kpi","t":"How do you get from the Operating Result to the Net Income?","o":["Subtract the Equity","Add the Financial Result and subtract taxes","Multiply by the Share Price","Add the Cash Balance"]},"k16":{"id":"k16","cat":"kpi","t":"The Financial Result in the Executive Summary is negative. Where does it mainly come from?","o":["Costs of building a plant","Losses from selling washing machines","Interest paid on the company's loans","Advertising expenses"]},"k17":{"id":"k17","cat":"kpi","t":"Which decisions lower the Production Cost per Unit in the long run?","o":["Raising the advertising budget","Building up a large stock of finished products","Raising the sales price","Investing in training and process optimization to raise productivity"]},"k18":{"id":"k18","cat":"kpi","t":"Net Income rose, but the Share Price fell. How is this possible?","o":["It is impossible: a higher Net Income always raises the Share Price","The Share Price depends only on the Cash Balance","The Share Price depends only on the market share","The Share Price combines several weighted KPIs, and others (for example Debt Ratio or Planning Quality) got worse"]},"k19":{"id":"k19","cat":"kpi","t":"Which line of the Executive Summary tells you how many washing machines you sold in a region?","o":["Regional Result","Competitiveness Index","Sales (Units)","Plant Utilization"]},"k20":{"id":"k20","cat":"kpi","t":"A region shows high sales in units but a negative Regional Result. What is the most likely explanation?","o":["The market in that region is growing","The Competitiveness Index in that region is too high","The price is too low or the costs of serving that region (for example transport, tariffs, marketing) are too high","The company's equity ratio is too high"]},"k21":{"id":"k21","cat":"kpirel","t":"Why do managers steer with relative KPIs such as Return on Sales or Equity Ratio rather than with absolute figures such as Net Income in MEUR?","o":["Relative KPIs make companies, regions and periods of different size comparable","Relative KPIs are always higher and therefore look better","Absolute figures cannot be planned","Absolute figures are not shown in the Executive Summary"]},"k22":{"id":"k22","cat":"kpirel","t":"One region has the highest revenue of all your regions. Is it therefore your best region?","o":["Not necessarily: you have to compare its result relative to its revenue (margin) with the other regions","No, the region with the lowest revenue is always the most profitable","Yes, the region with the highest revenue always earns the most","Yes, because revenue is the most important KPI"]},"k23":{"id":"k23","cat":"kpirel","t":"Your company has an Equity of 200 MEUR. Is that good?","o":["No, a high equity always means that money is not being used","It cannot be judged on its own; it needs a reference such as the total capital (Equity Ratio) or the competitors' values","Yes, an equity above 100 MEUR is always good","Yes, because equity is the same as profit"]},"k24":{"id":"k24","cat":"kpirel","t":"What makes a figure a real KPI (Key Performance Indicator)?","o":["Every company reports it in the same currency","It can be calculated exactly to two decimal places","It is linked to a goal, has a target or benchmark to compare with, and can be influenced by decisions","It is a large number that is shown in the report"]},"k25":{"id":"k25","cat":"kpirel","t":"A manager reports: 'We sold 412,000 washing machines.' What is missing to make this statement meaningful?","o":["Nothing, the number speaks for itself","The number of sales employees","The exact number of washing machines produced","A reference such as the plan, the previous period or the market volume (market share)"]},"k26":{"id":"k26","cat":"kpirel","t":"Which of these figures says the least about how well a company is managed?","o":["The Market Share Revenue","The Equity Ratio","The Return on Sales","The advertising budget in MEUR"]},"k27":{"id":"k27","cat":"kpirel","t":"Your team celebrates a record revenue. In the same period, the Return on Sales fell and the Debt Ratio rose. What is the right assessment?","o":["Return on Sales always falls when revenue rises, so everything is fine","The Debt Ratio does not matter as long as revenue grows","The period was a full success, because revenue is the main goal","The record revenue alone is a vanity figure: profitability and financial stability got worse"]},"k28":{"id":"k28","cat":"kpirel","t":"How do you recognise a 'vanity metric', a number that looks good but does not help to steer the company?","o":["It is calculated from at least two other figures","It usually grows anyway and does not lead to any decision","It is always expressed in percent","It is reported only once a year"]},"s01":{"id":"s01","cat":"sim","t":"Which of these is NOT a form of market entry in Mastering Global Expansion?","o":["Sales partner","Production partner","Licensing the brand to a local company","Own sales team"]},"s07":{"id":"s07","cat":"sim","t":"Which three factors make up the Competitiveness Index?","o":["Price, advertising and sales employees","Revenue, net income and equity","Technology, ecology and price","Market knowledge, company image and market barriers"]},"s08":{"id":"s08","cat":"sim","t":"What does spending on Corporate Identity increase?","o":["The awareness of your company in all regions","The interest rate","The production capacity","The technology level of your product"]},"s09":{"id":"s09","cat":"sim","t":"Why can a local plant help you sell more in a region?","o":["It automatically lowers the market price","It removes all competitors from the region","It doubles the effect of your advertising","Customers prefer local production, so market barriers go down"]},"s10":{"id":"s10","cat":"sim","t":"When is your price usually in the 'inelastic' range, where small changes hardly affect demand?","o":["Always, demand never reacts to price","Only when it equals the lowest competitor price","When it is 20–30 % below the market price","When it is within about 3–5 % of the average market price"]},"s19":{"id":"s19","cat":"sim","t":"What does the training budget per production employee mainly improve?","o":["The Qualification Index and with it productivity","The market share","The CSR-Index","The awareness level"]},"s21":{"id":"s21","cat":"sim","t":"When is a sales partner usually a better choice than your own sales team?","o":["When you plan to stay in the market for many years and want to build your own knowledge","When you want full control over sales","For a quick or uncertain market entry: the partner brings market knowledge and you avoid fixed costs","When you want to avoid paying commissions"]},"s22":{"id":"s22","cat":"sim","t":"What is the main advantage of a production partner compared to your own plant?","o":["You can end the contract at any time","No large investment, and production is possible right away","A higher CSR-Index is guaranteed","The cost per unit is lower in every case"]},"s23":{"id":"s23","cat":"sim","t":"Why does the productivity per employee rise with the cumulative production volume?","o":["Because the plant gets bigger automatically","Because demand rises","Learning curve: with experience the work gets done faster","Because wages fall over time"]},"s24":{"id":"s24","cat":"sim","t":"You double the advertising budget in a region. What usually happens to sales?","o":["They fall","They double","They rise by more than double","They rise, but by less than double (diminishing returns)"]},"s25":{"id":"s25","cat":"sim","t":"Why should a new plant be financed with a long-term rather than a short-term loan?","o":["Long-term investments should be financed long-term, because the money comes back only over many years","Short-term loans are not allowed for investments","Long-term loans have no interest","Short-term loans lower the equity ratio, long-term loans do not"]},"s26":{"id":"s26","cat":"sim","t":"Demand rises for one period only. What is usually the better way to produce more?","o":["Use overtime instead of hiring new employees","Build a new plant","Hire many new employees and dismiss them in the next period","Double the training budget"]},"s27":{"id":"s27","cat":"sim","t":"Why should you buy market research before entering a new market?","o":["It automatically increases your market share","To learn about customer preferences and competitors and reduce the risk of a wrong decision","It lowers the import tariffs","It is required by law"]},"s28":{"id":"s28","cat":"sim","t":"Customers in one region are very price-sensitive. Which product decision can make sense there?","o":["Stop advertising in that region","Set the price clearly above the market average","Raise the technology level to the maximum","Offer a lower technology level there to cut variable costs and allow a lower price"]},"s29":{"id":"s29","cat":"sim","t":"You stop advertising and Corporate Identity spending. What happens to your awareness in a region?","o":["It drops to zero immediately","It decreases over time","It keeps rising","It stays the same forever"]},"s30":{"id":"s30","cat":"sim","t":"Why are import tariffs and transport costs called economic market barriers?","o":["They lower the price customers pay","They raise your Competitiveness Index","They only affect local competitors","They make it more expensive to serve the market from abroad"]}}};
 var KEY = null;
-var KEYH = {"k01":281461,"k02":414566,"k03":334527,"k04":805834,"k05":306079,"k06":171233,"k07":813850,"k08":762324,"k09":923398,"k10":144022,"k11":5545,"k12":160487,"k13":254028,"k14":659998,"k15":927380,"k16":893726,"k17":424058,"k18":488419,"k19":706934,"k20":521897,"s01":248058,"s07":389591,"s08":640405,"s09":686282,"s10":753149,"s19":110498,"s21":743997,"s22":7017,"s23":183703,"s24":146745,"s25":707339,"s26":81823,"s27":63592,"s28":147514,"s29":727923,"s30":146038};
+var KEYH = {"k01":186015,"k02":47308,"k03":685823,"k04":311322,"k05":570888,"k06":525297,"k07":253634,"k08":965498,"k09":676509,"k10":644016,"k11":468244,"k12":106085,"k13":736490,"k14":29832,"k15":712178,"k16":261568,"k17":281123,"k18":232777,"k19":278771,"k20":808772,"k21":393035,"k22":890971,"k23":137717,"k24":188672,"k25":395987,"k26":428506,"k27":448858,"k28":959226,"s01":2402,"s07":917413,"s08":140601,"s09":271174,"s10":599603,"s19":782214,"s21":390901,"s22":107232,"s23":52162,"s24":607484,"s25":786182,"s26":440681,"s27":602919,"s28":992871,"s29":993921,"s30":659202};
 var DATA = null;
 // Shared test engine (student page + instructor tool).
 // Expects the globals BANK (question pool without key) and KEY (answer key,
@@ -245,9 +248,9 @@ var MGE = (function () {
   // DATA (optional global): real Executive Summary figures of the seminar, see import_reports.py.
   var HAS_DATA = typeof DATA !== "undefined" && DATA !== null && !!DATA.periods;
   var PLAN = HAS_DATA
-    ? [{ cat: "kpi", n: 5 }, { cat: "data", n: 6 }, { cat: "sim", n: 4 }]
-    : [{ cat: "kpi", n: 6 }, { cat: "calc", n: 4 }, { cat: "sim", n: 5 }];
-  var CAT_LABEL = { kpi: "Executive Summary KPI", calc: "KPI calculation", data: "Our seminar results", sim: "Strategy & transfer" };
+    ? [{ cat: "kpi", n: 2 }, { cat: "kpirel", n: 2 }, { cat: "data", n: 4 }, { cat: "chart", n: 3 }, { cat: "sim", n: 4 }]
+    : [{ cat: "kpi", n: 2 }, { cat: "kpirel", n: 3 }, { cat: "calc", n: 3 }, { cat: "chart", n: 3 }, { cat: "sim", n: 4 }];
+  var CAT_LABEL = { kpi: "Executive Summary KPI", kpirel: "KPI thinking", calc: "KPI calculation", data: "Our seminar results", chart: "Reading a chart", sim: "Strategy & transfer" };
   var ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   var ACCESS_SALT = "wt-acc-7Q";
   var RESULT_SALT = "wt-res-K3";
@@ -556,12 +559,227 @@ var MGE = (function () {
       } }
   };
   Object.keys(DT).forEach(function (id) { TITLES[id] = DT[id].title; });
+
+  // ---------- relative vs absolute KPIs (category "kpirel", option 0 is correct) ----------
+  var REL = {
+    r01: function (r) {
+      var revB = ri(r, 80, 150), m = ri(r, 3, 4), rosB = ri(r, 60, 120) / 10, f = ri(r, 12, 20) / 10;
+      var revA = revB * m, niB = round(revB * rosB / 100, 1), niA = round(niB * f, 1);
+      var ra = niA / revA * 100, rb = niB / revB * 100;
+      return { t: "Company A: Revenue Global " + fmt(revA, 1) + " MEUR, Net Income " + fmt(niA, 1) + " MEUR. Company B: Revenue Global " + fmt(revB, 1) + " MEUR, Net Income " + fmt(niB, 1) + " MEUR. Which company was more profitable?",
+        o: ["Company B: its Return on Sales is " + fmt(rb, 1) + " % compared with " + fmt(ra, 1) + " %",
+          "Company A: its Net Income is " + fmt(niA - niB, 1) + " MEUR higher",
+          "Company A: its revenue is " + (m === 3 ? "three" : "four") + " times as high",
+          "Both are equally profitable, because both made a profit"] };
+    },
+    r02: function (r) {
+      var rev0 = ri(r, 100, 200), ros0 = ri(r, 80, 120) / 10, gr = ri(r, 30, 60), gn = ri(r, 8, gr - 12);
+      var ni0 = round(rev0 * ros0 / 100, 1), rev1 = round(rev0 * (1 + gr / 100), 1), ni1 = round(ni0 * (1 + gn / 100), 1);
+      var a = ni0 / rev0 * 100, b = ni1 / rev1 * 100;
+      return { t: "From one period to the next, Net Income rose from " + fmt(ni0, 1) + " to " + fmt(ni1, 1) + " MEUR and Revenue Global rose from " + fmt(rev0, 1) + " to " + fmt(rev1, 1) + " MEUR. How do you judge the development of profitability?",
+        o: ["Profitability fell: Return on Sales dropped from " + fmt(a, 1) + " % to " + fmt(b, 1) + " %",
+          "Profitability rose: Net Income grew by " + fmt((ni1 / ni0 - 1) * 100, 0) + " %",
+          "Profitability rose: Return on Sales grew from " + fmt(b, 1) + " % to " + fmt(a, 1) + " %",
+          "Profitability cannot be judged without the Share Price"] };
+    },
+    r03: function (r) {
+      var reg = REGIONS[ri(r, 0, 4)], s0 = ri(r, 120, 250) / 10, g = ri(r, 15, 30), s = ri(r, 3, g - 7);
+      var s1 = s0 * (1 + s / 100) / (1 + g / 100);
+      return { t: "The washing machine market in " + reg + " grew by " + g + " % in units. Your sales there grew by " + s + " % in units. Last period your market share (units) was " + fmt(s0, 1) + " %. What happened?",
+        o: ["Your market share fell to about " + fmt(s1, 1) + " %, although your sales rose",
+          "Your market share rose to about " + fmt(s0 * (1 + s / 100), 1) + " %, because your sales rose",
+          "Your market share stayed at " + fmt(s0, 1) + " %",
+          "Your market share rose to about " + fmt(s0 * (1 + g / 100), 1) + " %, because the market grew"] };
+    }
+  };
+
+  // ---------- chart questions (category "chart", option 0 is correct) ----------
+  // The SVG is built here, so the test page, the evaluation tool and the result files show the same chart.
+  var COL = ["#2B8C96", "#D9822B"];
+  function esc(s) { return String(s).split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split('"').join("&quot;"); }
+  function n1(v) { return (Math.round(v * 10) / 10).toFixed(1); }
+  function svgOpen(w, h, label) {
+    return '<svg viewBox="0 0 ' + w + " " + h + '" width="' + w + '" height="' + h + '" role="img" aria-label="' + esc(label) +
+      '" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:' + w + 'px;height:auto;font-family:inherit">';
+  }
+  function txt(x, y, s, o) {
+    o = o || {};
+    return '<text x="' + n1(x) + '" y="' + n1(y) + '" fill="currentColor" font-size="' + (o.size || 12) + '" text-anchor="' + (o.anchor || "middle") + '"' +
+      (o.bold ? ' font-weight="600"' : "") + (o.op ? ' fill-opacity="' + o.op + '"' : "") + ">" + esc(s) + "</text>";
+  }
+  function rect(x, y, w, h, c) { return '<rect x="' + n1(x) + '" y="' + n1(y) + '" width="' + n1(Math.max(w, 0)) + '" height="' + n1(Math.max(h, 0)) + '" fill="' + c + '" rx="2"/>'; }
+  function hline(x1, x2, y, op) { return '<line x1="' + n1(x1) + '" y1="' + n1(y) + '" x2="' + n1(x2) + '" y2="' + n1(y) + '" stroke="currentColor" stroke-opacity="' + op + '" stroke-width="1"/>'; }
+  // One bar panel: categories on the x-axis, one or two series, every bar labelled with its value.
+  function panel(x0, y0, w, h, title, cats, series, o) {
+    o = o || {};
+    var out = txt(x0, y0 + 15, title, { anchor: "start", bold: true, size: 14 });
+    var top = y0 + 40, bottom = y0 + h - 24, ph = bottom - top, all = [];
+    series.forEach(function (s) { all = all.concat(s.vals); });
+    var min = o.min || 0, max = min + (Math.max.apply(null, all) - min) * 1.12;
+    var left = x0 + (o.ticks ? 44 : 4);
+    if (o.ticks) o.ticks.forEach(function (t) {
+      var y = bottom - (t - min) / (max - min) * ph;
+      out += hline(left, x0 + w, y, 0.18) + txt(left - 6, y + 4, fmt(t, 0), { anchor: "end", size: 12, op: 0.8 });
+    });
+    var gw = (x0 + w - left) / cats.length, bw = Math.min(44, (gw - 10) / series.length);
+    cats.forEach(function (c, i) {
+      var gx = left + i * gw + (gw - bw * series.length) / 2;
+      series.forEach(function (s, j) {
+        var v = s.vals[i], bh = (v - min) / (max - min) * ph, x = gx + j * bw;
+        out += rect(x + 1, bottom - bh, bw - 2, bh, s.col);
+        out += txt(x + bw / 2, bottom - bh - 5, fmt(v, o.dec == null ? 1 : o.dec), { size: series.length > 1 ? 11 : 12 });
+      });
+      out += txt(left + i * gw + gw / 2, bottom + 18, c, { size: 13 });
+    });
+    return out + hline(left, x0 + w, bottom, 0.6);
+  }
+  function legend(x, y, series) {
+    var out = "";
+    series.forEach(function (s, i) { var xx = x + i * 120; out += rect(xx, y - 10, 12, 12, s.col) + txt(xx + 18, y, s.name, { anchor: "start", size: 13 }); });
+    return out;
+  }
+  function argmax(a) { var b = 0; for (var i = 1; i < a.length; i++) if (a[i] > a[b]) b = i; return b; }
+  function gap1(a) { var s = a.slice().sort(function (x, y) { return y - x; }); return s[0] - s[1]; }
+  function twoPanels(label, cats, revs, nis, revTitle, niTitle) {
+    return svgOpen(560, 250, label) +
+      panel(0, 0, 268, 250, revTitle, cats, [{ vals: revs, col: COL[0] }]) +
+      panel(292, 0, 268, 250, niTitle, cats, [{ vals: nis, col: COL[1] }]) + "</svg>";
+  }
+
+  // g01 + g02 use the real seminar figures when they are available.
+  function g01Data() {
+    if (!HAS_DATA) return [];
+    var ps = dPeriods(), out = [];
+    if (ps.length < 4) return out;
+    var use = ps.slice(-4);
+    dComps(use[use.length - 1]).forEach(function (c) {
+      var rows = use.map(function (p) { return dRow(p, c); });
+      if (rows.some(function (x) { return !x || !isNum(x.rev) || !isNum(x.ni) || x.rev <= 0 || x.ni <= 0; })) return;
+      var rev = rows.map(function (x) { return x.rev; }), ni = rows.map(function (x) { return x.ni; });
+      var rs = ni.map(function (n, i) { return n / rev[i] * 100; });
+      if (argmax(rs) === argmax(ni) || gap1(rs) < 0.5) return;
+      out.push({ c: c, ps: use, rev: rev, ni: ni });
+    });
+    return out;
+  }
+  function g02Data() {
+    if (!HAS_DATA) return [];
+    var out = [];
+    dPeriods().forEach(function (p) {
+      var l = dComps(p).map(function (c) { var x = dRow(p, c); return x && isNum(x.rev) && isNum(x.ni) && x.rev > 0 && x.ni > 0 ? { c: c, rev: x.rev, ni: x.ni, v: x.ni / x.rev * 100 } : null; })
+        .filter(Boolean).slice(0, 6);
+      if (l.length < 4) return;
+      var rs = l.map(function (e) { return e.v; }), ni = l.map(function (e) { return e.ni; });
+      if (argmax(rs) === argmax(ni) || gap1(rs) < 0.3) return;
+      out.push({ p: p, l: l });
+    });
+    return out;
+  }
+  function pickOpts(correct, traps, all, r) {
+    var out = [correct];
+    traps.concat(shuffle(all, r)).forEach(function (x) { if (out.length < 4 && out.indexOf(x) < 0) out.push(x); });
+    return out;
+  }
+
+  var CHART = {
+    g01: function (r) {
+      var inst = g01Data(), cats, rev, ni, who;
+      if (inst.length) {
+        var it = inst[Math.floor(r() * inst.length)];
+        cats = it.ps.map(function (p) { return "Period " + p; }); rev = it.rev; ni = it.ni; who = co(it.c) + " in our seminar";
+      } else {
+        for (var k = 0; k < 60; k++) {
+          rev = [ri(r, 150, 220)];
+          for (var i = 1; i < 4; i++) rev.push(rev[i - 1] + ri(r, 20, 60));
+          ni = rev.map(function (v) { return round(v * ri(r, 40, 110) / 1000, 1); });
+          var rs0 = ni.map(function (n, j) { return n / rev[j] * 100; });
+          if (argmax(rs0) !== argmax(ni) && gap1(rs0) >= 0.8) break;
+        }
+        cats = ["Period 1", "Period 2", "Period 3", "Period 4"]; who = "your company";
+      }
+      var rs = ni.map(function (n, j) { return n / rev[j] * 100; }), best = argmax(rs);
+      return { t: "The chart shows Revenue Global and Net Income of " + who + " over four periods. In which period was the Return on Sales highest?",
+        o: pickOpts(cats[best], [cats[argmax(ni)], cats[argmax(rev)]], cats, r),
+        svg: twoPanels("Revenue Global and Net Income per period", cats.map(function (c) { return c.split("Period ").join("P"); }), rev, ni, "Revenue Global (MEUR)", "Net Income (MEUR)") };
+    },
+    g02: function (r) {
+      var inst = g02Data(), l, intro;
+      if (inst.length) {
+        var it = inst[Math.floor(r() * inst.length)];
+        l = it.l.map(function (e) { return { name: co(e.c), short: "C" + String(e.c).slice(1), rev: e.rev, ni: e.ni }; });
+        intro = "The chart shows Revenue Global and Net Income of the seminar companies in Period " + it.p + ".";
+      } else {
+        for (var k = 0; k < 60; k++) {
+          l = [1, 2, 3, 4, 5].map(function (n) { var rev = ri(r, 150, 420); return { name: "Company " + n, short: "C" + n, rev: rev, ni: round(rev * ri(r, 20, 120) / 1000, 1) }; });
+          var rs0 = l.map(function (e) { return e.ni / e.rev; }), ni0 = l.map(function (e) { return e.ni; });
+          if (argmax(rs0) !== argmax(ni0) && gap1(rs0.map(function (v) { return v * 100; })) >= 0.8) break;
+        }
+        intro = "The chart shows Revenue Global and Net Income of five companies in the same period.";
+      }
+      var rs = l.map(function (e) { return e.ni / e.rev; }), names = l.map(function (e) { return e.name; });
+      var bestRev = argmax(l.map(function (e) { return e.rev; })), bestNi = argmax(l.map(function (e) { return e.ni; }));
+      return { t: intro + " Which company was the most profitable (highest Return on Sales)?",
+        o: pickOpts(names[argmax(rs)], [names[bestNi], names[bestRev]], names, r),
+        svg: twoPanels("Revenue Global and Net Income per company", l.map(function (e) { return e.short; }), l.map(function (e) { return e.rev; }), l.map(function (e) { return e.ni; }), "Revenue Global (MEUR)", "Net Income (MEUR)") };
+    },
+    g03: function (r) {
+      var i1 = ri(r, 0, 4), i2 = (i1 + ri(r, 1, 4)) % 5, a = ri(r, 15, 30) * 10, pct = ri(r, 6, 12), d = Math.round(a * pct / 100);
+      var b = a + d, min = a - Math.round(d / 2), x = Math.round(d / a * 100);
+      var svg = svgOpen(420, 260, "Revenue in two regions, the axis starts at " + min) +
+        panel(0, 0, 420, 260, "Revenue (MEUR)", [REGIONS[i1], REGIONS[i2]], [{ vals: [a, b], col: COL[0] }], { min: min, ticks: [min, a, b], dec: 0 }) + "</svg>";
+      return { t: "A colleague shows this chart: the bar for " + REGIONS[i2] + " looks about three times as high as the bar for " + REGIONS[i1] + ". What is true?",
+        o: ["Revenue in " + REGIONS[i2] + " is only about " + x + " % higher, because the axis does not start at zero",
+          "Revenue in " + REGIONS[i2] + " is about three times as high as in " + REGIONS[i1],
+          "Revenue in " + REGIONS[i2] + " is about twice as high as in " + REGIONS[i1],
+          "Revenue in " + REGIONS[i1] + " is about " + x + " % higher than in " + REGIONS[i2]],
+        svg: svg };
+    },
+    g04: function (r) {
+      var m = [ri(r, 1800, 2400)], s = [ri(r, 250, 420)], k = ri(r, 1, 3);
+      for (var i = 1; i < 4; i++) {
+        if (i === k) { var g = ri(r, 18, 30), sg = ri(r, 3, g - 8); m.push(Math.round(m[i - 1] * (1 + g / 100))); s.push(Math.round(s[i - 1] * (1 + sg / 100))); }
+        else { m.push(Math.round(m[i - 1] * (1 + ri(r, -3, 8) / 100))); s.push(Math.round(s[i - 1] * (1 + ri(r, -2, 10) / 100))); }
+      }
+      var a = s[k - 1] / m[k - 1] * 100, b = s[k] / m[k] * 100, c = s[k] / m[k - 1] * 100;
+      var cats = ["P1", "P2", "P3", "P4"];
+      var svg = svgOpen(560, 250, "Market volume and own sales per period") +
+        panel(0, 0, 268, 250, "Market volume (thousand units)", cats, [{ vals: m, col: COL[0] }], { dec: 0 }) +
+        panel(292, 0, 268, 250, "Your sales (thousand units)", cats, [{ vals: s, col: COL[1] }], { dec: 0 }) + "</svg>";
+      return { t: "The chart shows the market volume of a region and your sales there. From Period " + k + " to Period " + (k + 1) + " your sales rose. What happened to your market share (units)?",
+        o: ["It fell from about " + fmt(a, 1) + " % to " + fmt(b, 1) + " %",
+          "It rose from about " + fmt(a, 1) + " % to " + fmt(c, 1) + " %",
+          "It stayed the same at about " + fmt(a, 1) + " %",
+          "It cannot be determined from the chart"],
+        svg: svg };
+    },
+    g05: function (r) {
+      var regs = shuffle(REGIONS, r).slice(0, 3), p = ri(r, 2, 4);
+      var e0 = ri(r, 120, 180), o0 = [ri(r, 30, 60), ri(r, 20, 45)];
+      var e1 = Math.round(e0 * (1 + ri(r, 4, 12) / 100)), o1 = o0.map(function (v) { return Math.round(v * (1 + ri(r, 60, 140) / 100)); });
+      var t0 = e0 + o0[0] + o0[1], t1 = e1 + o1[0] + o1[1], a = e0 / t0 * 100, b = e1 / t1 * 100;
+      var svg = svgOpen(560, 270, "Revenue by region in two periods") +
+        legend(330, 16, [{ name: "Period " + (p - 1), col: COL[0] }, { name: "Period " + p, col: COL[1] }]) +
+        panel(0, 0, 560, 270, "Revenue (MEUR)", regs, [{ vals: [e0, o0[0], o0[1]], col: COL[0] }, { vals: [e1, o1[0], o1[1]], col: COL[1] }], { dec: 0 }) + "</svg>";
+      return { t: "The chart shows your revenue by region in Period " + (p - 1) + " and Period " + p + ". Which statement about " + regs[0] + " is right?",
+        o: ["Its revenue rose, but its share of total revenue fell from about " + fmt(a, 0) + " % to " + fmt(b, 0) + " %",
+          "Its share of total revenue rose, because its revenue rose",
+          "Its share of total revenue stayed the same at about " + fmt(a, 0) + " %",
+          "Its revenue fell from " + e1 + " to " + e0 + " MEUR"],
+        svg: svg };
+    }
+  };
+  var REL_TITLES = { r01: "Which company is more profitable (absolute vs. relative)", r02: "Net Income up, Return on Sales down", r03: "Sales up, market share down" };
+  var CHART_TITLES = { g01: "Period with the highest Return on Sales", g02: "Most profitable company", g03: "Misleading axis", g04: "Market share from market volume and sales", g05: "Regional revenue share" };
+  Object.keys(REL_TITLES).forEach(function (id) { TITLES[id] = REL_TITLES[id]; });
+  Object.keys(CHART_TITLES).forEach(function (id) { TITLES[id] = CHART_TITLES[id]; });
   var DCACHE = {};
   function dInst(id) { return DCACHE[id] || (DCACHE[id] = HAS_DATA ? DT[id].inst() : []); }
 
   // ---------- building one participant's test ----------
   function pool(cat) {
     if (cat === "calc") return Object.keys(CALC).sort();
+    if (cat === "chart") return Object.keys(CHART).sort();
+    if (cat === "kpirel") return Object.keys(BANK.q).filter(function (id) { return BANK.q[id].cat === cat; }).concat(Object.keys(REL)).sort();
     if (cat === "data") return Object.keys(DT).filter(function (id) { return dInst(id).length > 0; }).sort();
     return Object.keys(BANK.q).filter(function (id) { return BANK.q[id].cat === cat; }).sort();
   }
@@ -571,6 +789,12 @@ var MGE = (function () {
       var r = rng(seed + "|" + id + "|v"), list = dInst(id);
       var d = DT[id].make(list[Math.floor(r() * list.length)], r);
       q = { id: id, cat: "data", kind: "calc", t: d.t, o: d.o };
+    } else if (CHART[id]) {
+      var h = CHART[id](rng(seed + "|" + id + "|v"));
+      q = { id: id, cat: "chart", kind: "calc", t: h.t, o: h.o, svg: h.svg };
+    } else if (REL[id]) {
+      var e = REL[id](rng(seed + "|" + id + "|v"));
+      q = { id: id, cat: "kpirel", kind: "calc", t: e.t, o: e.o };
     } else if (CALC[id]) {
       var g = CALC[id](rng(seed + "|" + id + "|v"));
       q = { id: id, cat: "calc", kind: "calc", t: g.t, o: g.o };
@@ -635,7 +859,7 @@ var MGE = (function () {
   function receipt(code) { return String(code).slice(-6).toUpperCase(); }
 
   return {
-    MINUTES: MINUTES, TOTAL: TOTAL, PLAN: PLAN, CAT_LABEL: CAT_LABEL, CALC: CALC, DT: DT, TITLES: TITLES, HAS_DATA: HAS_DATA,
+    MINUTES: MINUTES, TOTAL: TOTAL, PLAN: PLAN, CAT_LABEL: CAT_LABEL, CALC: CALC, DT: DT, REL: REL, CHART: CHART, TITLES: TITLES, HAS_DATA: HAS_DATA,
     hash: hash, rng: rng, normCode: normCode, normId: normId, cleanName: cleanName, nameKey: nameKey, validCode: validCode,
     prettyCode: prettyCode, newCode: newCode, buildTest: buildTest, makeQuestion: makeQuestion,
     pool: pool, correctK: correctK, keyHash: keyHash, isCorrect: isCorrect, score: score, encodeResult: encodeResult, decodeResult: decodeResult, chk: chk, receipt: receipt
@@ -784,6 +1008,8 @@ var MGE = (function () {
     $("q-num").textContent = "Question " + (cur + 1) + " of " + test.length;
     $("q-cat").textContent = MGE.CAT_LABEL[q.cat];
     $("q-text").textContent = q.t;
+    $("q-chart").hidden = !q.svg;
+    $("q-chart").innerHTML = q.svg || "";   // SVG built by the engine, no user input
     var box = $("q-opts"); box.textContent = "";
     q.opts.forEach(function (o, i) {
       var b = document.createElement("button");
